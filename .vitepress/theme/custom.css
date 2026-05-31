@@ -1,0 +1,351 @@
+/*
+ * Wickra brand palette. Cyan-anchored with a warm orange accent for the
+ * trading vibe. Tuned to read well on the default VitePress light + dark
+ * surfaces without clobbering its typography.
+ */
+:root {
+  --vp-c-brand-1: #0ea5e9;
+  --vp-c-brand-2: #0284c7;
+  --vp-c-brand-3: #0369a1;
+  --vp-c-brand-soft: rgba(14, 165, 233, 0.14);
+
+  --vp-c-accent: #f97316;
+  --vp-c-accent-soft: rgba(249, 115, 22, 0.14);
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(
+    120deg,
+    #0ea5e9 0%,
+    #06b6d4 40%,
+    #f97316 100%
+  );
+
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    rgba(14, 165, 233, 0.4) 0%,
+    rgba(249, 115, 22, 0.35) 100%
+  );
+  --vp-home-hero-image-filter: blur(56px);
+
+  --wk-grid-line: rgba(15, 23, 42, 0.06);
+  --wk-chart-bg-light: #ffffff;
+  --wk-chart-bg-dark: #0b1220;
+}
+
+.dark {
+  --vp-c-brand-1: #38bdf8;
+  --vp-c-brand-2: #0ea5e9;
+  --vp-c-brand-3: #0284c7;
+  --vp-c-brand-soft: rgba(56, 189, 248, 0.18);
+
+  --vp-c-accent: #fb923c;
+  --vp-c-accent-soft: rgba(251, 146, 60, 0.16);
+
+  --wk-grid-line: rgba(148, 163, 184, 0.12);
+}
+
+/* Make the hero name pop with a subtle drop-shadow under the gradient text */
+.VPHero .name {
+  filter: drop-shadow(0 4px 24px rgba(14, 165, 233, 0.18));
+}
+
+/* Tighter feature-grid spacing */
+.VPFeatures .container .items {
+  gap: 16px !important;
+}
+.VPFeature {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  border: 1px solid var(--vp-c-divider) !important;
+}
+.VPFeature:hover {
+  transform: translateY(-2px);
+  border-color: var(--vp-c-brand-1) !important;
+  box-shadow: 0 12px 28px -16px var(--vp-c-brand-soft);
+}
+
+/* ===== Custom Wickra components ===== */
+
+.wk-card {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  padding: 20px 22px;
+  background: var(--vp-c-bg-soft);
+  margin: 24px 0;
+}
+
+.wk-card h3 {
+  margin-top: 0 !important;
+}
+
+/* WasmDemo */
+.wk-demo {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  background: var(--vp-c-bg-soft);
+  padding: 18px;
+  margin: 24px 0;
+}
+
+.wk-demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.wk-demo-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+}
+
+.wk-demo-control label {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.wk-demo-control select,
+.wk-demo-control input[type='range'],
+.wk-demo-control input[type='number'] {
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: var(--vp-font-family-base);
+  font-size: 14px;
+  min-width: 120px;
+}
+
+.wk-demo-control input[type='range'] {
+  padding: 0;
+  height: 28px;
+}
+
+.wk-demo-button {
+  background: var(--vp-c-brand-1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.wk-demo-button:hover {
+  background: var(--vp-c-brand-2);
+}
+
+.wk-demo-button:active {
+  transform: scale(0.97);
+}
+
+.wk-demo-button.secondary {
+  background: transparent;
+  color: var(--vp-c-brand-1);
+  border: 1px solid var(--vp-c-brand-1);
+}
+
+.wk-demo-chart {
+  width: 100%;
+  height: 420px;
+  border-radius: 10px;
+  background: var(--wk-chart-bg-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .wk-demo-chart {
+  background: var(--wk-chart-bg-dark);
+}
+
+.wk-demo-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 14px;
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+}
+
+.wk-demo-stat .label {
+  display: block;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.wk-demo-stat .value {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--vp-c-text-1);
+}
+
+.wk-demo-status {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  padding: 8px 12px;
+  background: var(--vp-c-brand-soft);
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.wk-demo-status.error {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.dark .wk-demo-status.error {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* BenchmarkBar */
+.wk-bench {
+  margin: 24px 0;
+}
+
+.wk-bench-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 110px;
+  gap: 14px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.wk-bench-row:last-child {
+  border-bottom: none;
+}
+
+.wk-bench-label {
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.wk-bench-track {
+  position: relative;
+  height: 28px;
+  background: var(--vp-c-bg-soft);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.wk-bench-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, var(--vp-c-brand-2), var(--vp-c-brand-1));
+  border-radius: 6px;
+  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wk-bench-fill.peer {
+  background: linear-gradient(90deg, #94a3b8, #cbd5e1);
+}
+
+.dark .wk-bench-fill.peer {
+  background: linear-gradient(90deg, #64748b, #94a3b8);
+}
+
+.wk-bench-fill.winner {
+  background: linear-gradient(90deg, var(--vp-c-accent), #fbbf24);
+}
+
+.wk-bench-value {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.wk-bench-value .speedup {
+  color: var(--vp-c-accent);
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+@media (max-width: 720px) {
+  .wk-bench-row {
+    grid-template-columns: 120px 1fr 80px;
+    gap: 8px;
+  }
+}
+
+/* InstallTabs */
+.wk-tabs {
+  margin: 18px 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--vp-c-bg);
+}
+
+.wk-tabs-header {
+  display: flex;
+  background: var(--vp-c-bg-soft);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.wk-tabs-tab {
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--vp-c-text-2);
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  font-size: 14px;
+}
+
+.wk-tabs-tab:hover {
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+}
+
+.wk-tabs-tab.active {
+  color: var(--vp-c-brand-1);
+  border-bottom-color: var(--vp-c-brand-1);
+}
+
+.wk-tabs-panel {
+  padding: 0;
+  position: relative;
+}
+
+.wk-tabs-panel pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: var(--vp-code-block-bg) !important;
+}
+
+.wk-tabs-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-2);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.wk-tabs-panel:hover .wk-tabs-copy {
+  opacity: 1;
+}
+
+.wk-tabs-copy:hover {
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+}

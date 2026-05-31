@@ -1,0 +1,20 @@
+{
+  "name": "wickra-site",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Marketing site, live WASM demo, and API aggregator for Wickra.",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "dependencies": {
+    "lightweight-charts": "^4.2.0",
+    "wickra-wasm": "^0.3.1"
+  },
+  "devDependencies": {
+    "vitepress": "^1.5.0",
+    "vue": "^3.5.0"
+  }
+}
