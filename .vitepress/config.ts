@@ -1,4 +1,6 @@
 import { defineConfig } from 'vitepress'
+import wasm from 'vite-plugin-wasm'
+import topLevelAwait from 'vite-plugin-top-level-await'
 
 export default defineConfig({
   title: 'Wickra',
@@ -100,11 +102,6 @@ export default defineConfig({
       label: 'On this page',
     },
 
-    editLink: {
-      pattern: 'https://github.com/wickra-lib/webpage/edit/main/:path',
-      text: 'Edit this page on GitHub',
-    },
-
     lastUpdated: {
       text: 'Updated',
       formatOptions: { dateStyle: 'medium' },
@@ -117,12 +114,18 @@ export default defineConfig({
   },
 
   vite: {
-    // wickra-wasm ships a .wasm next to its JS loader — Vite needs to know
-    // not to try to parse it as JS.
-    assetsInclude: ['**/*.wasm'],
+    // wickra-wasm is a wasm-pack `--target bundler` build: its JS glue does
+    // `import * as wasm from './wickra_wasm_bg.wasm'` and expects the bundler
+    // to instantiate the module and expose its exports. vite-plugin-wasm does
+    // exactly that (the previous `assetsInclude: ['**/*.wasm']` made Vite hand
+    // back the asset URL instead, so `wasm.__wbindgen_*` was undefined and the
+    // demo failed with "__wbindgen_add_to_stack_pointer is not a function").
+    // vite-plugin-top-level-await is required because the wasm init the plugin
+    // emits uses top-level await.
+    plugins: [wasm(), topLevelAwait()],
     optimizeDeps: {
-      // Pre-bundle these so dev-server boots fast and the WASM loader runs
-      // through the same import path as the build.
+      // esbuild's dep pre-bundling can't follow the .wasm ESM import, so keep
+      // wickra-wasm out of it and let vite-plugin-wasm handle it on demand.
       exclude: ['wickra-wasm'],
     },
     server: {
