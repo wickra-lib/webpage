@@ -13,7 +13,10 @@ export default defineConfig({
   base: '/',
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+    ['link', { rel: 'icon', href: '/favicon.ico', sizes: 'any' }],
+    ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png' }],
+    ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16.png' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }],
     ['meta', { name: 'theme-color', content: '#0ea5e9' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'Wickra — streaming-first technical indicators' }],
@@ -25,12 +28,14 @@ export default defineConfig({
           '214 indicators with a Rust core and Python / Node / WASM bindings. Same code for backtest and live tick. Install-free.',
       },
     ],
+    ['meta', { property: 'og:image', content: 'https://wickra.org/og-banner.png' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: 'https://wickra.org/og-banner.png' }],
   ],
 
   themeConfig: {
     siteTitle: 'Wickra',
-    logo: { src: '/logo.svg', alt: 'Wickra' },
+    logo: { src: '/wickra-mark.svg', alt: 'Wickra' },
 
     nav: [
       { text: 'Home', link: '/' },

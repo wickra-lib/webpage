@@ -6,7 +6,7 @@ hero:
   text: "Streaming-first technical indicators."
   tagline: "214 indicators with a Rust core and Python, Node, and WASM bindings. Same code for backtest and live tick. Install-free."
   image:
-    src: /hero.svg
+    src: /wickra-mark.svg
     alt: Wickra
   actions:
     - theme: brand

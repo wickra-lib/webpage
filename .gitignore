@@ -3,3 +3,6 @@ node_modules
 .vitepress/cache
 .DS_Store
 *.log
+
+# generated at build by scripts/gen-og-banner.mjs
+public/og-banner.png

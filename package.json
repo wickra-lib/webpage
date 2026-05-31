@@ -6,7 +6,8 @@
   "description": "Marketing site, live WASM demo, and API aggregator for Wickra.",
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build",
+    "gen:banner": "node scripts/gen-og-banner.mjs",
+    "build": "node scripts/gen-og-banner.mjs && vitepress build",
     "preview": "vitepress preview"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "wickra-wasm": "^0.3.1"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "vitepress": "^1.5.0",
     "vue": "^3.5.0"
   }
