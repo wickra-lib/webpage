@@ -45,10 +45,25 @@ export default defineConfig({
     siteTitle: 'Wickra',
     logo: { src: '/wickra-mark.svg', alt: 'Wickra' },
 
+    // Shared top-level nav, kept 1:1 with the docs site (docs.wickra.org).
+    // On-site targets are relative (SPA navigation); targets that live on the
+    // docs site are absolute. The docs site mirrors this list with the
+    // resolution flipped.
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Demo', link: '/demo' },
       { text: 'Benchmarks', link: '/benchmarks' },
+      { text: 'Overview', link: 'https://docs.wickra.org/overview' },
+      {
+        text: 'Quickstart',
+        items: [
+          { text: 'Rust', link: 'https://docs.wickra.org/Quickstart-Rust' },
+          { text: 'Python', link: 'https://docs.wickra.org/Quickstart-Python' },
+          { text: 'Node', link: 'https://docs.wickra.org/Quickstart-Node' },
+          { text: 'WASM', link: 'https://docs.wickra.org/Quickstart-WASM' },
+        ],
+      },
+      { text: 'Indicators', link: 'https://docs.wickra.org/Indicators-Overview' },
       {
         text: 'API',
         items: [
@@ -59,8 +74,18 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Links',
+        items: [
+          { text: 'Changelog', link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md' },
+          { text: 'crates.io', link: 'https://crates.io/crates/wickra' },
+          { text: 'PyPI', link: 'https://pypi.org/project/wickra/' },
+          { text: 'npm', link: 'https://www.npmjs.com/package/wickra' },
+        ],
+      },
+      {
         text: 'v0.3.1',
         items: [
+          { text: 'Release notes', link: 'https://github.com/wickra-lib/wickra/releases' },
           { text: 'Changelog', link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md' },
           { text: 'Docs', link: 'https://docs.wickra.org/' },
           { text: 'docs.rs', link: 'https://docs.rs/wickra' },
