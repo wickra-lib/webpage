@@ -5,7 +5,7 @@ import topLevelAwait from 'vite-plugin-top-level-await'
 export default defineConfig({
   title: 'Wickra',
   description:
-    'Streaming-first technical indicators. Rust core with Python, Node, and WASM bindings. 244 indicators, install-free.',
+    'Streaming-first technical indicators. Rust core with Python, Node, and WASM bindings. 249 indicators, install-free.',
   lang: 'en-US',
   cleanUrls: true,
 
@@ -42,7 +42,7 @@ export default defineConfig({
       {
         property: 'og:description',
         content:
-          '244 indicators with a Rust core and Python / Node / WASM bindings. Same code for backtest and live tick. Install-free.',
+          '249 indicators with a Rust core and Python / Node / WASM bindings. Same code for backtest and live tick. Install-free.',
       },
     ],
     ['meta', { property: 'og:image', content: 'https://wickra.org/og-banner.webp' }],
