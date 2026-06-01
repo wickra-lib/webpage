@@ -1,5 +1,7 @@
 ---
 layout: home
+title: Wickra — streaming-first technical indicators in Rust
+titleTemplate: false
 
 hero:
   name: "Wickra"
@@ -115,6 +117,30 @@ by one update per tick — the cost stays flat as your history grows.
 
 The streaming gap widens linearly with history length — see the
 [benchmark page](/benchmarks) for the full table.
+
+### How the benchmark is measured {#methodology}
+
+The per-tick numbers come from the same `compare_libraries` script the
+[benchmark page](/benchmarks) runs: each library is handed an identical
+generated price series, warmed up over 5 000 bars, and then timed advancing one
+tick at a time. The Wickra figure is measured through the **Python binding**, so
+the small PyO3 boundary cost is already included rather than hidden in the bare
+Rust kernel. Reproduced on a Windows 11 / AMD Ryzen 9 9950X machine with Rust
+1.92 in release profile — read the values as **relative speedups on identical
+input**, not as an absolute performance contract, since CPU, memory clock, and
+runtime versions all move the absolutes.
+
+### Who streaming-first is for {#use-cases}
+
+The same indicator object serves three workflows without a code change. For
+**live trading**, the optional Binance Spot WebSocket adapter pushes ticks
+straight into an indicator that updates in constant time, so per-tick latency
+stays flat even after a session has run for hours. For **backtesting**, you can
+replay a full history through that very same struct and trust that batch and
+streaming produce identical output — the equivalence is pinned by
+reference-value tests. For **research**, the Rust core and the Python, Node, and
+WASM bindings all share one implementation, so a notebook prototype and a
+production service compute the exact same numbers.
 
 ## The full indicator catalogue {#catalogue}
 
