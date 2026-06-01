@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "Wickra"
   text: "Streaming-first technical indicators."
-  tagline: "237 indicators with a Rust core and Python, Node, and WASM bindings. Same code for backtest and live tick. Install-free."
+  tagline: "242 indicators with a Rust core and Python, Node, and WASM bindings. Same code for backtest and live tick. Install-free."
   image:
     src: /wickra-mark.svg
     alt: Wickra
@@ -118,7 +118,7 @@ The streaming gap widens linearly with history length — see the
 
 ## The full indicator catalogue {#catalogue}
 
-237 indicators across sixteen families. Every one is implemented once in Rust,
+242 indicators across sixteen families. Every one is implemented once in Rust,
 re-exported by every binding, and pinned by reference-value tests.
 
 | Family | Examples |
