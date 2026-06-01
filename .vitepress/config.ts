@@ -14,6 +14,15 @@ export default defineConfig({
   // old GitHub Pages preview.
   base: '/',
 
+  // Sitemap is emitted into the build output by VitePress' built-in generator
+  // (no extra dependency); CF Pages serves dist/sitemap.xml at the domain root.
+  // robots.txt points discovery here.
+  sitemap: { hostname: 'https://wickra.org' },
+
+  // README.md is repo documentation, not a site page — keep it out of the build
+  // so it never becomes a /README route or a stray sitemap entry.
+  srcExclude: ['README.md'],
+
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico', sizes: 'any' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32.png' }],
