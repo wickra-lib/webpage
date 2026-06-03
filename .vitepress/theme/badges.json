@@ -49,8 +49,8 @@
     "height": 20
   },
   {
-    "alt": "License: PolyForm-NC",
-    "href": "https://github.com/wickra-lib/wickra/blob/main/LICENSE",
+    "alt": "License: MIT OR Apache-2.0",
+    "href": "https://github.com/wickra-lib/wickra#license",
     "file": "/badges/license.svg",
     "width": 164,
     "height": 20
@@ -59,7 +59,7 @@
     "alt": "OpenSSF Scorecard",
     "href": "https://scorecard.dev/viewer/?uri=github.com/wickra-lib/wickra",
     "file": "/badges/scorecard.svg",
-    "width": 126,
+    "width": 136,
     "height": 20
   },
   {

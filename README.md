@@ -33,4 +33,4 @@ Custom domain `wickra.org` is configured in the Cloudflare Pages dashboard.
 
 ## License
 
-Released under the [PolyForm Noncommercial 1.0.0](https://github.com/wickra-lib/wickra/blob/main/LICENSE) License.
+Dual-licensed under [MIT](https://github.com/wickra-lib/wickra/blob/main/LICENSE-MIT) or [Apache-2.0](https://github.com/wickra-lib/wickra/blob/main/LICENSE-APACHE), at your option.
