@@ -6,7 +6,7 @@ titleTemplate: false
 hero:
   name: "Wickra"
   text: "Streaming-first technical indicators."
-  tagline: "325 indicators with a Rust core and Python, Node, and WASM bindings. Same code for backtest and live tick. Install-free."
+  tagline: "339 indicators with a Rust core and Python, Node, and WASM bindings. Same code for backtest and live tick. Install-free."
   image:
     src: /wickra-mark.svg
     alt: Wickra
@@ -144,7 +144,7 @@ production service compute the exact same numbers.
 
 ## The full indicator catalogue {#catalogue}
 
-325 indicators across sixteen families. Every one is implemented once in Rust,
+339 indicators across sixteen families. Every one is implemented once in Rust,
 re-exported by every binding, and pinned by reference-value tests.
 
 | Family | Examples |
