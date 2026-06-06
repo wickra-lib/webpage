@@ -13,7 +13,7 @@ No system dependencies. No C toolchain. The Rust core ships as a
 pre-built wheel for every Python 3.9–3.13 on Linux, macOS, and Windows
 (x86_64 and aarch64 where the registry has the platform).
 
-- **Latest:** [`wickra 0.6.0`](https://pypi.org/project/wickra/)
+- **Latest:** [`wickra 0.6.1`](https://pypi.org/project/wickra/)
 - **Supported Python:** 3.9 / 3.11 / 3.12 / 3.13 (3.10 omitted upstream)
 
 ## Batch — TA-Lib-style on a NumPy array

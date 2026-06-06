@@ -13,7 +13,7 @@ The package ships native bindings (built with napi-rs) and pulls in
 the right platform subpackage automatically — no `node-gyp`, no
 post-install build step.
 
-- **Latest:** [`wickra 0.6.0`](https://www.npmjs.com/package/wickra)
+- **Latest:** [`wickra 0.6.1`](https://www.npmjs.com/package/wickra)
 - **Supported Node:** 18 LTS and 20 LTS, on Linux x64 / arm64,
   macOS x64 / arm64, Windows x64.
   *(Windows ARM64 is tracked but blocked on an npm name-publishing
