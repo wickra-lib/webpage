@@ -82,7 +82,7 @@ otherwise:
 
 The full per-indicator Rust-vs-Rust table — wins *and* losses — is in the
 [project README](https://github.com/wickra-lib/wickra#benchmarks). Wickra's edge
-is breadth (423 indicators) and native O(1) streaming across four languages, not
+is breadth (467 indicators) and native O(1) streaming across four languages, not
 winning every micro-benchmark.
 
 ## What the numbers do **not** say
