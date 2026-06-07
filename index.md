@@ -111,9 +111,9 @@ by one update per tick — the cost stays flat as your history grows.
 
 | Library scenario | Cost per tick (5 000-bar history) |
 |---|---|
-| Wickra (streaming RSI(14))     | **0.119 µs** ⚡ |
-| talipp     (streaming RSI(14)) | 1.644 µs (13.8× slower) |
-| pandas-ta  (re-batch RSI(14))  | ~5 ms (≈ 42 000× slower at this size) |
+| Wickra (streaming RSI(14))     | **0.061 µs** ⚡ |
+| talipp     (streaming RSI(14)) | 0.95 µs (16× slower) |
+| TA-Lib     (re-batch RSI(14))  | 298 µs (≈ 4 900× slower at this size) |
 
 The streaming gap widens linearly with history length — see the
 [benchmark page](/benchmarks) for the full table.
