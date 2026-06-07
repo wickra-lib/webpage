@@ -20,6 +20,9 @@ hero:
     - theme: alt
       text: Benchmarks
       link: /benchmarks
+    - theme: alt
+      text: Wiki
+      link: https://docs.wickra.org/
 
 features:
   - icon: ⚡
