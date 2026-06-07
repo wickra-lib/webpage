@@ -40,7 +40,7 @@ const structuredData = {
 export default defineConfig({
   title: 'Wickra',
   description:
-    'Streaming-first technical indicators with a Rust core and Python, Node, and WASM bindings — 467 indicators, install-free. Same code for backtest and live tick.',
+    'Streaming-first technical indicators with a Rust core and Python, Node, and WASM bindings — 474 indicators, install-free. Same code for backtest and live tick.',
   lang: 'en-US',
   cleanUrls: true,
 
@@ -71,7 +71,7 @@ export default defineConfig({
       {
         property: 'og:description',
         content:
-          '467 indicators with a Rust core and Python / Node / WASM bindings. Same code for backtest and live tick. Install-free.',
+          '474 indicators with a Rust core and Python / Node / WASM bindings. Same code for backtest and live tick. Install-free.',
       },
     ],
     ['meta', { property: 'og:image', content: 'https://wickra.org/og-banner.webp' }],
@@ -135,7 +135,7 @@ export default defineConfig({
         ],
       },
       {
-        text: 'v0.6.6',
+        text: 'v0.6.7',
         items: [
           { text: 'Release notes', link: 'https://github.com/wickra-lib/wickra/releases' },
           { text: 'Changelog', link: 'https://github.com/wickra-lib/wickra/blob/main/CHANGELOG.md' },
