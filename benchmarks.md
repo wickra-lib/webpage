@@ -5,20 +5,20 @@ description: Wickra vs. the Python TA ecosystem (finta, talipp) and the other Ru
 
 <script setup>
 const batch = [
-  { label: 'SMA(20)',           wickra: 59.6,  peer: 354.2,  peerName: 'finta' },
-  { label: 'EMA(20)',           wickra: 88.4,  peer: 309.3,  peerName: 'finta' },
-  { label: 'RSI(14)',           wickra: 77.3,  peer: 1283.0, peerName: 'finta' },
-  { label: 'MACD(12,26,9)',     wickra: 116.4, peer: 529.5,  peerName: 'finta' },
-  { label: 'Bollinger(20,2.0)', wickra: 146.0, peer: 1246.4, peerName: 'finta' },
-  { label: 'ATR(14)',           wickra: 135.8, peer: 3811.8, peerName: 'finta' },
+  { label: 'SMA(20)',           wickra: 22.2,  peer: 290.1,  peerName: 'finta' },
+  { label: 'EMA(20)',           wickra: 30.5,  peer: 198.5,  peerName: 'finta' },
+  { label: 'RSI(14)',           wickra: 52.3,  peer: 812.3,  peerName: 'finta' },
+  { label: 'MACD(12,26,9)',     wickra: 129.8, peer: 716.7,  peerName: 'finta' },
+  { label: 'Bollinger(20,2.0)', wickra: 87.2,  peer: 1255.5, peerName: 'finta' },
+  { label: 'ATR(14)',           wickra: 74.7,  peer: 3496.4, peerName: 'finta' },
 ]
 
 const streaming = [
-  { label: 'SMA(20)',           wickra: 0.067, peer: 0.633, peerName: 'talipp', unit: 'µs / tick' },
-  { label: 'EMA(20)',           wickra: 0.051, peer: 0.628, peerName: 'talipp', unit: 'µs / tick' },
-  { label: 'RSI(14)',           wickra: 0.053, peer: 1.004, peerName: 'talipp', unit: 'µs / tick' },
-  { label: 'MACD(12,26,9)',     wickra: 0.071, peer: 3.641, peerName: 'talipp', unit: 'µs / tick' },
-  { label: 'Bollinger(20,2.0)', wickra: 0.085, peer: 4.866, peerName: 'talipp', unit: 'µs / tick' },
+  { label: 'SMA(20)',           wickra: 0.089, peer: 0.959, peerName: 'talipp', unit: 'µs / tick' },
+  { label: 'EMA(20)',           wickra: 0.111, peer: 1.187, peerName: 'talipp', unit: 'µs / tick' },
+  { label: 'RSI(14)',           wickra: 0.061, peer: 0.949, peerName: 'talipp', unit: 'µs / tick' },
+  { label: 'MACD(12,26,9)',     wickra: 0.079, peer: 3.298, peerName: 'talipp', unit: 'µs / tick' },
+  { label: 'Bollinger(20,2.0)', wickra: 0.089, peer: 4.967, peerName: 'talipp', unit: 'µs / tick' },
 ]
 </script>
 
