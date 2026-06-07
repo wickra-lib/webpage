@@ -62,6 +62,18 @@
   border-color: var(--vp-c-brand-1) !important;
   box-shadow: 0 12px 28px -16px var(--vp-c-brand-soft);
 }
+/* Feature cards: pin to 3 columns on desktop and 2 on phones (VitePress would
+   otherwise collapse the 6-card grid to a single column below 640px). */
+@media (min-width: 768px) {
+  .VPFeatures .container .items .item {
+    width: calc(100% / 3) !important;
+  }
+}
+@media (max-width: 639px) {
+  .VPFeatures .container .items .item {
+    width: 50% !important;
+  }
+}
 
 /* ===== Custom Wickra components ===== */
 
