@@ -39,16 +39,16 @@ const updated = computed(() => {
       Released under the MIT OR Apache-2.0 license — not a trading system, use at your own risk.
     </p>
     <p class="wk-footer-meta wk-footer-meta-sub">
-      <a href="/about">About</a>
-      <span class="wk-sep">·</span>
-      <a href="/privacy">Privacy</a>
-    </p>
-    <p class="wk-footer-meta wk-footer-meta-sub">
       <span>Copyright © 2026 kingchenc</span>
       <template v-if="updated">
         <span class="wk-sep">·</span>
         <span>Updated {{ updated }}</span>
       </template>
+    </p>
+    <p class="wk-footer-meta wk-footer-meta-sub">
+      <a href="/about">About</a>
+      <span class="wk-sep">·</span>
+      <a href="/privacy">Privacy</a>
     </p>
   </footer>
 </template>
