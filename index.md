@@ -6,7 +6,7 @@ titleTemplate: false
 hero:
   name: "Wickra"
   text: "Streaming-first technical indicators."
-  tagline: "514 indicators with a Rust core and Python, Node, and WASM bindings. Same code for backtest and live tick. Install-free."
+  tagline: "514 indicators with a Rust core and Python, Node, WASM, and C ABI bindings. Same code for backtest and live tick. Install-free."
   image:
     src: /wickra-mark.svg
     alt: Wickra
@@ -29,8 +29,8 @@ features:
     title: O(1) per tick
     details: Every indicator is a state machine. Streaming updates are constant-time — no recomputing over history on every new bar.
   - icon: 🦀
-    title: Rust core, four bindings
-    details: One implementation in Rust. Python (PyO3), Node (napi-rs), browsers (wasm-bindgen), and Rust itself all share it.
+    title: Rust core, five targets
+    details: One implementation in Rust. Python (PyO3), Node (napi-rs), browsers (wasm-bindgen) and Rust itself all share it, plus a C ABI any C-capable language links against.
   - icon: 📦
     title: Install-free
     details: "pip install wickra works on Windows without a C toolchain. So does npm install wickra. And cargo add wickra. Zero system deps."
@@ -51,6 +51,7 @@ const installTabs = [
   { label: 'Node',   lang: 'bash', code: 'npm install wickra' },
   { label: 'Rust',   lang: 'bash', code: 'cargo add wickra' },
   { label: 'WASM',   lang: 'bash', code: 'npm install wickra-wasm' },
+  { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
 ]
 
 const pyCode = `import wickra as ta
@@ -87,11 +88,22 @@ for (const price of liveFeed) {
   if (v != null && v > 70) console.log('overbought', v)
 }`
 
+const cCode = `#include "wickra.h"
+
+struct Rsi *rsi = wickra_rsi_new(14);
+for (size_t i = 0; i < n; ++i) {
+    double v = wickra_rsi_update(rsi, prices[i]);
+    if (v == v && v > 70.0)   /* v == v is the NaN check */
+        printf("overbought %.2f\\n", v);
+}
+wickra_rsi_free(rsi);`
+
 const snippetTabs = [
   { label: 'Python', lang: 'python',     code: pyCode },
   { label: 'Node',   lang: 'javascript', code: nodeCode },
   { label: 'Rust',   lang: 'rust',       code: rustCode },
   { label: 'WASM',   lang: 'javascript', code: wasmCode },
+  { label: 'C',      lang: 'c',          code: cCode },
 ]
 </script>
 
@@ -141,8 +153,8 @@ straight into an indicator that updates in constant time, so per-tick latency
 stays flat even after a session has run for hours. For **backtesting**, you can
 replay a full history through that very same struct and trust that batch and
 streaming produce identical output — the equivalence is pinned by
-reference-value tests. For **research**, the Rust core and the Python, Node, and
-WASM bindings all share one implementation, so a notebook prototype and a
+reference-value tests. For **research**, the Rust core and the Python, Node,
+WASM and C bindings all share one implementation, so a notebook prototype and a
 production service compute the exact same numbers.
 
 ## The full indicator catalogue {#catalogue}
