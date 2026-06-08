@@ -5,54 +5,42 @@ description: Wickra vs. the Python TA ecosystem (finta, talipp) and the other Ru
 
 <script setup>
 // Full Python batch field, measured in one Python 3.12 run alongside Wickra.
-const batchCols = ['Wickra', 'TA-Lib', 'tulipy', 'pandas-ta', 'finta']
 const batch = [
-  { label: 'SMA(20)',           cells: [22.2,  15.6,  15.9, 32.7,  290.1]  },
-  { label: 'EMA(20)',           cells: [30.5,  30.4,  30.9, 46.7,  198.5]  },
-  { label: 'RSI(14)',           cells: [52.3,  72.0,  34.2, 88.8,  812.3]  },
-  { label: 'MACD(12,26,9)',     cells: [129.8, 111.1, 38.4, 286.8, 716.7]  },
-  { label: 'Bollinger(20,2.0)', cells: [87.2,  74.6,  37.9, 474.3, 1255.5] },
-  { label: 'ATR(14)',           cells: [74.7,  87.3,  35.5, null,  3496.4] },
+  { label: 'SMA(20)',           wickra: 22.2,  peers: [{ name: 'TA-Lib', value: 15.6 }, { name: 'tulipy', value: 15.9 }, { name: 'pandas-ta', value: 32.7 },  { name: 'finta', value: 290.1 }]  },
+  { label: 'EMA(20)',           wickra: 30.5,  peers: [{ name: 'TA-Lib', value: 30.4 }, { name: 'tulipy', value: 30.9 }, { name: 'pandas-ta', value: 46.7 },  { name: 'finta', value: 198.5 }]  },
+  { label: 'RSI(14)',           wickra: 52.3,  peers: [{ name: 'TA-Lib', value: 72.0 }, { name: 'tulipy', value: 34.2 }, { name: 'pandas-ta', value: 88.8 },  { name: 'finta', value: 812.3 }]  },
+  { label: 'MACD(12,26,9)',     wickra: 129.8, peers: [{ name: 'TA-Lib', value: 111.1 }, { name: 'tulipy', value: 38.4 }, { name: 'pandas-ta', value: 286.8 }, { name: 'finta', value: 716.7 }]  },
+  { label: 'Bollinger(20,2.0)', wickra: 87.2,  peers: [{ name: 'TA-Lib', value: 74.6 }, { name: 'tulipy', value: 37.9 }, { name: 'pandas-ta', value: 474.3 }, { name: 'finta', value: 1255.5 }] },
+  { label: 'ATR(14)',           wickra: 74.7,  peers: [{ name: 'TA-Lib', value: 87.3 }, { name: 'tulipy', value: 35.5 }, { name: 'pandas-ta', value: null },  { name: 'finta', value: 3496.4 }] },
 ]
 
+// Python streaming: Wickra vs talipp, the only other incremental peer. The
+// recompute-on-every-tick libraries (TA-Lib/tulipy/pandas-ta/finta) are
+// 2 800–19 000× slower here — too far off-scale for a bar, covered in prose.
 const streaming = [
-  { label: 'SMA(20)',           wickra: 0.089, peer: 0.959, peerName: 'talipp', unit: 'µs / tick' },
-  { label: 'EMA(20)',           wickra: 0.111, peer: 1.187, peerName: 'talipp', unit: 'µs / tick' },
-  { label: 'RSI(14)',           wickra: 0.061, peer: 0.949, peerName: 'talipp', unit: 'µs / tick' },
-  { label: 'MACD(12,26,9)',     wickra: 0.079, peer: 3.298, peerName: 'talipp', unit: 'µs / tick' },
-  { label: 'Bollinger(20,2.0)', wickra: 0.089, peer: 4.967, peerName: 'talipp', unit: 'µs / tick' },
+  { label: 'SMA(20)',           wickra: 0.089, unit: 'µs / tick', peers: [{ name: 'talipp', value: 0.959 }] },
+  { label: 'EMA(20)',           wickra: 0.111, unit: 'µs / tick', peers: [{ name: 'talipp', value: 1.187 }] },
+  { label: 'RSI(14)',           wickra: 0.061, unit: 'µs / tick', peers: [{ name: 'talipp', value: 0.949 }] },
+  { label: 'MACD(12,26,9)',     wickra: 0.079, unit: 'µs / tick', peers: [{ name: 'talipp', value: 3.298 }] },
+  { label: 'Bollinger(20,2.0)', wickra: 0.089, unit: 'µs / tick', peers: [{ name: 'talipp', value: 4.967 }] },
 ]
 
-// Full Python streaming field: the only incremental peer (talipp) plus the
-// recompute-on-every-tick band (TA-Lib stands in for tulipy / pandas-ta, which
-// land in the same band). µs per tick after a 5 000-bar warmup.
-const streamCols = ['Wickra', 'talipp', 'TA-Lib (recompute)']
-const streamFull = [
-  { label: 'SMA(20)',           cells: [0.089, 0.96, 422] },
-  { label: 'EMA(20)',           cells: [0.111, 1.19, 430] },
-  { label: 'RSI(14)',           cells: [0.061, 0.95, 298] },
-  { label: 'MACD(12,26,9)',     cells: [0.079, 3.30, 327] },
-  { label: 'Bollinger(20,2.0)', cells: [0.089, 4.97, 296] },
-]
-
-// Rust core vs Rust crates, no language-binding overhead.
-const rustStreamCols = ['Wickra', 'kand', 'ta-rs', 'yata']
+// Rust core vs Rust crates, no language-binding overhead. Per-tick in ns.
 const rustStream = [
-  { label: 'SMA(20)',           cells: [50,  38,  47,  38]   },
-  { label: 'EMA(20)',           cells: [154, 69,  56,  69]   },
-  { label: 'RSI(14)',           cells: [164, 216, 74,  null] },
-  { label: 'MACD(12,26,9)',     cells: [275, 143, 66,  null] },
-  { label: 'Bollinger(20,2.0)', cells: [128, 248, 168, null] },
-  { label: 'ATR(14)',           cells: [152, 166, 61,  null] },
+  { label: 'SMA(20)',           wickra: 50,  unit: 'ns', peers: [{ name: 'kand', value: 38 },  { name: 'ta-rs', value: 47 },  { name: 'yata', value: 38 }]   },
+  { label: 'EMA(20)',           wickra: 154, unit: 'ns', peers: [{ name: 'kand', value: 69 },  { name: 'ta-rs', value: 56 },  { name: 'yata', value: 69 }]   },
+  { label: 'RSI(14)',           wickra: 164, unit: 'ns', peers: [{ name: 'kand', value: 216 }, { name: 'ta-rs', value: 74 },  { name: 'yata', value: null }] },
+  { label: 'MACD(12,26,9)',     wickra: 275, unit: 'ns', peers: [{ name: 'kand', value: 143 }, { name: 'ta-rs', value: 66 },  { name: 'yata', value: null }] },
+  { label: 'Bollinger(20,2.0)', wickra: 128, unit: 'ns', peers: [{ name: 'kand', value: 248 }, { name: 'ta-rs', value: 168 }, { name: 'yata', value: null }] },
+  { label: 'ATR(14)',           wickra: 152, unit: 'ns', peers: [{ name: 'kand', value: 166 }, { name: 'ta-rs', value: 61 },  { name: 'yata', value: null }] },
 ]
-const rustBatchCols = ['Wickra', 'kand']
 const rustBatch = [
-  { label: 'SMA(20)',           cells: [53,  41]  },
-  { label: 'EMA(20)',           cells: [111, 71]  },
-  { label: 'RSI(14)',           cells: [221, 259] },
-  { label: 'MACD(12,26,9)',     cells: [533, 327] },
-  { label: 'Bollinger(20,2.0)', cells: [404, 460] },
-  { label: 'ATR(14)',           cells: [122, 169] },
+  { label: 'SMA(20)',           wickra: 53,  peers: [{ name: 'kand', value: 41 }]  },
+  { label: 'EMA(20)',           wickra: 111, peers: [{ name: 'kand', value: 71 }]  },
+  { label: 'RSI(14)',           wickra: 221, peers: [{ name: 'kand', value: 259 }] },
+  { label: 'MACD(12,26,9)',     wickra: 533, peers: [{ name: 'kand', value: 327 }] },
+  { label: 'Bollinger(20,2.0)', wickra: 404, peers: [{ name: 'kand', value: 460 }] },
+  { label: 'ATR(14)',           wickra: 122, peers: [{ name: 'kand', value: 169 }] },
 ]
 </script>
 
@@ -60,9 +48,11 @@ const rustBatch = [
 
 Wickra is a **streaming-first** library: the state machine inside every
 indicator takes a single new tick and returns its updated output in constant
-time. The tables below show what that costs against the full Python TA ecosystem
+time. The charts below show what that costs against the full Python TA ecosystem
 and the other Rust crates — wins **and** losses, the same figures the
 [project README](https://github.com/wickra-lib/wickra#benchmarks) carries.
+Each bar is normalised to the slowest in its group, so the shortest bar is the
+fastest library; the value to the right is the measured number.
 
 ::: tip Reproduce these on your own hardware
 ```bash
@@ -87,20 +77,18 @@ incremental API and must recompute the whole history on every tick. Only
 `talipp` (Python) and `ta-rs` / `yata` (Rust) carry real per-tick state. This is
 the gap the library was built to expose.
 
-<BenchmarkBar :rows="streaming" lower-is-better />
-
 **Python — per-tick latency** (seed 5 000 bars, then feed ticks one at a time):
 
-<BenchmarkTable :columns="streamCols" :rows="streamFull" unit="µs / tick" />
+<BenchmarkBar :rows="streaming" />
 
 Against the only other incremental Python peer Wickra is **11–56× faster**;
 against the recompute-on-every-tick libraries it is **2 800–19 000× faster**
 (`finta` RSI hits 19 000×). tulipy / pandas-ta land in the same recompute band
-as TA-Lib.
+as TA-Lib — too far off-scale to chart next to a sub-microsecond bar.
 
 **Rust — per-tick latency** (whole 50 000-bar series, lower = faster):
 
-<BenchmarkTable :columns="rustStreamCols" :rows="rustStream" :decimals="0" />
+<BenchmarkBar :rows="rustStream" :decimals="0" />
 
 `ta-rs` hands back a bare `f64` from the first tick with no warmup and no
 validation; it leads several rows by giving those guarantees up. Against `kand`,
@@ -118,18 +106,18 @@ on RSI and ATR.
 
 **Python** (20 000-bar pass, µs/op, lower = faster):
 
-<BenchmarkTable :columns="batchCols" :rows="batch" :decimals="1" unit="µs/op" />
+<BenchmarkBar :rows="batch" :decimals="1" />
 
 > All five libraries are measured in the **same Python 3.12 run** as Wickra (no
 > CI-vs-desktop mix). tulipy's SIMD C and TA-Lib lead the simple recurrences;
 > `pandas-ta` and `finta` trail across the board. talipp is excluded from the
-> batch table on purpose — it is streaming-first, so re-instantiating it for a
+> batch chart on purpose — it is streaming-first, so re-instantiating it for a
 > full batch pass is not a like-for-like comparison.
 
 **Rust** (50 000-bar pass, µs, lower = faster). Only Wickra and `kand` expose a
 batch API; `ta-rs` and `yata` are streaming-only:
 
-<BenchmarkTable :columns="rustBatchCols" :rows="rustBatch" :decimals="0" unit="µs" />
+<BenchmarkBar :rows="rustBatch" :decimals="0" />
 
 Wickra wins **RSI, Bollinger and ATR** outright and trades a few µs on the simple
 recurrences for the warmup/NaN guarantees. Its real edge is breadth (474

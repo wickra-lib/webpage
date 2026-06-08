@@ -49,9 +49,25 @@
   filter: drop-shadow(0 4px 24px rgba(14, 165, 233, 0.18));
 }
 
-/* Tighter feature-grid spacing */
+/* Feature cards: an explicit CSS grid so the column count is exact. VitePress'
+   default is a flexbox where each `.item` carries a width; combined with our
+   `gap` override the flex gap is *added on top* of three 33.3% items, so the 3rd
+   card overflows and wraps to 2-up. CSS grid tracks absorb the gap instead, so
+   3-up on desktop / 2-up on phone hold. */
 .VPFeatures .container .items {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
   gap: 16px !important;
+}
+@media (min-width: 768px) {
+  .VPFeatures .container .items {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+.VPFeatures .container .items .item {
+  width: auto !important;
+  max-width: none !important;
+  padding: 0 !important;
 }
 .VPFeature {
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
@@ -61,18 +77,6 @@
   transform: translateY(-2px);
   border-color: var(--vp-c-brand-1) !important;
   box-shadow: 0 12px 28px -16px var(--vp-c-brand-soft);
-}
-/* Feature cards: pin to 3 columns on desktop and 2 on phones (VitePress would
-   otherwise collapse the 6-card grid to a single column below 640px). */
-@media (min-width: 768px) {
-  .VPFeatures .container .items .item {
-    width: calc(100% / 3) !important;
-  }
-}
-@media (max-width: 639px) {
-  .VPFeatures .container .items .item {
-    width: 50% !important;
-  }
 }
 
 /* ===== Custom Wickra components ===== */
@@ -222,42 +226,76 @@
   margin: 24px 0;
 }
 
-.wk-bench-row {
-  display: grid;
-  grid-template-columns: 200px 1fr 110px;
-  gap: 14px;
-  align-items: center;
-  padding: 8px 0;
+/* One group per indicator: a heading row, then one bar per library. */
+.wk-bench-group {
+  padding: 14px 0;
   border-bottom: 1px solid var(--vp-c-divider);
 }
 
-.wk-bench-row:last-child {
+.wk-bench-group:last-child {
   border-bottom: none;
 }
 
-.wk-bench-label {
-  font-weight: 600;
+.wk-bench-grouphead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.wk-bench-grouplabel {
+  font-weight: 700;
   color: var(--vp-c-text-1);
+}
+
+.wk-bench-speedup {
+  color: var(--vp-c-accent);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.wk-bench-bar {
+  display: grid;
+  grid-template-columns: 96px 1fr 92px;
+  gap: 12px;
+  align-items: center;
+  padding: 3px 0;
+}
+
+.wk-bench-name {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wk-bench-bar.is-self .wk-bench-name {
+  color: var(--vp-c-text-1);
+  font-weight: 700;
+}
+
+.wk-bench-star {
+  color: var(--vp-c-accent);
+  margin-right: 3px;
 }
 
 .wk-bench-track {
   position: relative;
-  height: 28px;
+  height: 20px;
   background: var(--vp-c-bg-soft);
-  border-radius: 6px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
 .wk-bench-fill {
   position: absolute;
   inset: 0 auto 0 0;
-  background: linear-gradient(90deg, var(--vp-c-brand-2), var(--vp-c-brand-1));
-  border-radius: 6px;
-  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.wk-bench-fill.peer {
   background: linear-gradient(90deg, #94a3b8, #cbd5e1);
+  border-radius: 5px;
+  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dark .wk-bench-fill.peer {
@@ -268,23 +306,22 @@
   background: linear-gradient(90deg, var(--vp-c-accent), #fbbf24);
 }
 
-.wk-bench-value {
+.wk-bench-num {
   font-variant-numeric: tabular-nums;
   text-align: right;
   font-weight: 600;
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-2);
+  font-size: 13px;
 }
 
-.wk-bench-value .speedup {
+.wk-bench-num.is-best {
   color: var(--vp-c-accent);
-  font-size: 12px;
   font-weight: 700;
-  margin-left: 4px;
 }
 
 @media (max-width: 720px) {
-  .wk-bench-row {
-    grid-template-columns: 120px 1fr 80px;
+  .wk-bench-bar {
+    grid-template-columns: 72px 1fr 76px;
     gap: 8px;
   }
 }
