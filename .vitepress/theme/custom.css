@@ -179,6 +179,37 @@
   background: var(--wk-chart-bg-dark);
 }
 
+/* TradingView-style value legend under the chart — carries the live numbers so
+   the price axis itself never has to (no overlapping on-chart value tags). */
+.wk-demo-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-top: 10px;
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+}
+.wk-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  white-space: nowrap;
+}
+.wk-legend-chip strong {
+  color: var(--vp-c-text-1);
+}
+.wk-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
 .wk-demo-stats {
   display: flex;
   flex-wrap: wrap;
