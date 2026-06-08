@@ -1,25 +1,32 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 
+interface BenchEntry {
+  name: string
+  value: number | null
+}
+
 interface BenchRow {
   label: string
   wickra: number
-  peer?: number | null
-  peerName?: string
+  /** Every competitor in the row; each renders its own bar. */
+  peers: BenchEntry[]
   unit?: string
 }
 
 const props = defineProps<{
   rows: BenchRow[]
   title?: string
-  /** Lower-is-better (default) inverts the bar so the winner is shortest. */
+  /** Lower-is-better (default): the shortest bar is the fastest. */
   lowerIsBetter?: boolean
+  /** Fixed decimals; omit for magnitude-adaptive formatting. */
+  decimals?: number
 }>()
 
 const animated = ref(false)
 
 onMounted(() => {
-  // Defer one frame so the transition fires.
+  // Defer one frame so the width transition fires from 0.
   requestAnimationFrame(() => {
     animated.value = true
   })
@@ -27,52 +34,85 @@ onMounted(() => {
 
 const lowerBetter = computed(() => props.lowerIsBetter ?? true)
 
-// Normalise bar widths against the slowest value in the row so the winner
-// is always visually shortest (or longest, depending on direction).
-function widthFor(value: number, row: BenchRow): string {
-  if (!animated.value) return '0%'
-  const ref = Math.max(row.wickra, row.peer ?? 0)
+// Wickra plus its peers, sorted fastest-first so each row reads as a ranking.
+function entries(row: BenchRow): (BenchEntry & { self: boolean })[] {
+  const all = [
+    { name: 'Wickra', value: row.wickra, self: true },
+    ...row.peers.map((p) => ({ ...p, self: false })),
+  ]
+  return all.sort((a, b) => {
+    if (a.value == null) return 1
+    if (b.value == null) return -1
+    return lowerBetter.value ? a.value - b.value : b.value - a.value
+  })
+}
+
+function rowMax(row: BenchRow): number {
+  return Math.max(row.wickra, ...row.peers.map((p) => p.value ?? 0))
+}
+
+function best(row: BenchRow): number {
+  const vals = [row.wickra, ...row.peers.map((p) => p.value)].filter(
+    (v): v is number => v != null,
+  )
+  return lowerBetter.value ? Math.min(...vals) : Math.max(...vals)
+}
+
+function widthFor(value: number | null, row: BenchRow): string {
+  if (!animated.value || value == null) return '0%'
+  const ref = rowMax(row)
   if (ref === 0) return '0%'
   const pct = (value / ref) * 100
   return `${Math.max(2, Math.min(100, pct))}%`
 }
 
-function speedupLabel(row: BenchRow): string {
-  if (row.peer == null || row.peer === 0) return ''
-  const ratio = lowerBetter.value ? row.peer / row.wickra : row.wickra / row.peer
+// Speedup of the slowest-vs-Wickra, shown once per row as a headline.
+function rowSpeedup(row: BenchRow): string {
+  const peerVals = row.peers.map((p) => p.value).filter((v): v is number => v != null)
+  if (!peerVals.length || row.wickra === 0) return ''
+  const slowest = Math.max(...peerVals)
+  const ratio = lowerBetter.value ? slowest / row.wickra : row.wickra / slowest
   if (!isFinite(ratio) || ratio <= 1.01) return ''
-  return `${ratio.toFixed(1)}× faster`
+  return ratio >= 100 ? `up to ${Math.round(ratio)}×` : `up to ${ratio.toFixed(1)}×`
+}
+
+function fmt(value: number | null): string {
+  if (value == null) return '—'
+  if (props.decimals != null) return value.toFixed(props.decimals)
+  const mag = Math.abs(value)
+  if (mag >= 100) return value.toFixed(0)
+  if (mag >= 1) return value.toFixed(2)
+  return value.toFixed(3)
 }
 </script>
 
 <template>
   <div class="wk-bench">
     <h3 v-if="title">{{ title }}</h3>
-    <div v-for="row in rows" :key="row.label" class="wk-bench-row">
-      <div class="wk-bench-label">{{ row.label }}</div>
-      <div>
-        <div class="wk-bench-track" style="margin-bottom: 4px;">
-          <div
-            class="wk-bench-fill winner"
-            :style="{ width: widthFor(row.wickra, row) }"
-          />
-        </div>
-        <div class="wk-bench-track" v-if="row.peer != null">
-          <div
-            class="wk-bench-fill peer"
-            :style="{ width: widthFor(row.peer, row) }"
-          />
-        </div>
+    <div v-for="row in rows" :key="row.label" class="wk-bench-group">
+      <div class="wk-bench-grouphead">
+        <span class="wk-bench-grouplabel">{{ row.label }}</span>
+        <span class="wk-bench-speedup" v-if="rowSpeedup(row)">{{ rowSpeedup(row) }} faster</span>
       </div>
-      <div class="wk-bench-value">
-        <div>
-          <strong>{{ row.wickra.toFixed(1) }}</strong>
-          <small style="color:var(--vp-c-text-2);"> {{ row.unit ?? 'µs' }}</small>
+      <div
+        v-for="e in entries(row)"
+        :key="e.name"
+        class="wk-bench-bar"
+        :class="{ 'is-self': e.self }"
+      >
+        <div class="wk-bench-name">
+          <span v-if="e.self" class="wk-bench-star">★</span>{{ e.name }}
         </div>
-        <div v-if="row.peer != null" style="color:var(--vp-c-text-2);">
-          {{ row.peer.toFixed(1) }} <small>{{ row.unit ?? 'µs' }}</small>
+        <div class="wk-bench-track">
+          <div
+            class="wk-bench-fill"
+            :class="e.value === best(row) ? 'winner' : 'peer'"
+            :style="{ width: widthFor(e.value, row) }"
+          />
         </div>
-        <span class="speedup" v-if="speedupLabel(row)">{{ speedupLabel(row) }}</span>
+        <div class="wk-bench-num" :class="{ 'is-best': e.value === best(row) }">
+          {{ fmt(e.value) }}<small> {{ row.unit ?? 'µs' }}</small>
+        </div>
       </div>
     </div>
   </div>

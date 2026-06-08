@@ -5,7 +5,6 @@ import './custom.css'
 import Layout from './Layout.vue'
 import WasmDemo from '../components/WasmDemo.vue'
 import BenchmarkBar from '../components/BenchmarkBar.vue'
-import BenchmarkTable from '../components/BenchmarkTable.vue'
 import InstallTabs from '../components/InstallTabs.vue'
 
 export default {
@@ -14,7 +13,6 @@ export default {
   enhanceApp({ app }) {
     app.component('WasmDemo', WasmDemo)
     app.component('BenchmarkBar', BenchmarkBar)
-    app.component('BenchmarkTable', BenchmarkTable)
     app.component('InstallTabs', InstallTabs)
   },
 } satisfies Theme
