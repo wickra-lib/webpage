@@ -11,6 +11,9 @@ hero:
     src: /wickra-mark.svg
     alt: Wickra
   actions:
+    - theme: alt
+      text: Wiki
+      link: https://docs.wickra.org/
     - theme: brand
       text: Live demo
       link: /demo
@@ -20,9 +23,6 @@ hero:
     - theme: alt
       text: Benchmarks
       link: /benchmarks
-    - theme: alt
-      text: Wiki
-      link: https://docs.wickra.org/
 
 features:
   - icon: ⚡
