@@ -15,7 +15,7 @@ The `wickra` crate is a façade that re-exports `wickra-core`. For lean
 builds you can depend on `wickra-core` directly and pick features with
 `--no-default-features`.
 
-- **Latest:** [`wickra 0.7.2`](https://crates.io/crates/wickra)
+- **Latest:** [`wickra 0.7.3`](https://crates.io/crates/wickra)
 - **API reference:** <https://docs.rs/wickra>
 - **MSRV:** Rust 1.86 (workspace), 1.88 (Node binding crate)
 
