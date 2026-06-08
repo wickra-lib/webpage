@@ -51,13 +51,6 @@ function rowMax(row: BenchRow): number {
   return Math.max(row.wickra, ...row.peers.map((p) => p.value ?? 0))
 }
 
-function best(row: BenchRow): number {
-  const vals = [row.wickra, ...row.peers.map((p) => p.value)].filter(
-    (v): v is number => v != null,
-  )
-  return lowerBetter.value ? Math.min(...vals) : Math.max(...vals)
-}
-
 function widthFor(value: number | null, row: BenchRow): string {
   if (!animated.value || value == null) return '0%'
   const ref = rowMax(row)
@@ -106,11 +99,11 @@ function fmt(value: number | null): string {
         <div class="wk-bench-track">
           <div
             class="wk-bench-fill"
-            :class="e.value === best(row) ? 'winner' : 'peer'"
+            :class="e.self ? 'winner' : 'peer'"
             :style="{ width: widthFor(e.value, row) }"
           />
         </div>
-        <div class="wk-bench-num" :class="{ 'is-best': e.value === best(row) }">
+        <div class="wk-bench-num" :class="{ 'is-best': e.self }">
           {{ fmt(e.value) }}<small> {{ row.unit ?? 'µs' }}</small>
         </div>
       </div>
