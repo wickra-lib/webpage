@@ -12,7 +12,7 @@ producing every indicator value you see.
 
 <WasmDemo />
 
-The picker carries one well-known indicator from each family — moving
+The picker carries the best-known indicators from each family — moving
 averages, oscillators, bands, trailing stops, pivots, Ichimoku,
 candlestick / chart / harmonic patterns, Fibonacci and more. Whatever
 its shape — a single line, a set of bands, a sub-pane oscillator, or

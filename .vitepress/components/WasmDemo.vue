@@ -13,7 +13,7 @@ import { useData } from 'vitepress'
 // Market Breadth need a live order-book / funding / breadth feed that a single
 // synthetic price series cannot stand in for. Alt-Chart Bars (Renko/Kagi/P&F)
 // emit a variable number of bars per tick and get a dedicated renderer later.
-type Sig = 'scalar' | 'ohlc' | 'hlc' | 'hl' | 'cv' | 'hlv' | 'ohlcv_ts'
+type Sig = 'scalar' | 'ohlc' | 'hlc' | 'hl' | 'cv' | 'hlcv' | 'hlv' | 'ohlcv_ts'
 type Pane = 'price' | 'sub'
 type Render = 'line' | 'multi' | 'markers'
 
@@ -31,25 +31,96 @@ interface Pick {
 
 const PICKS: Pick[] = [
   { fam: 'Moving Averages', cls: 'EMA', label: 'EMA — Exponential MA', ctor: [20], sig: 'scalar', pane: 'price', render: 'line', len: true },
+  { fam: 'Moving Averages', cls: 'SMA', label: 'SMA — Simple MA', ctor: [20], sig: 'scalar', pane: 'price', render: 'line', len: true },
+  { fam: 'Moving Averages', cls: 'WMA', label: 'WMA — Weighted MA', ctor: [20], sig: 'scalar', pane: 'price', render: 'line', len: true },
+  { fam: 'Moving Averages', cls: 'HMA', label: 'HMA — Hull MA', ctor: [20], sig: 'scalar', pane: 'price', render: 'line', len: true },
+
   { fam: 'Momentum Oscillators', cls: 'RSI', label: 'RSI — Relative Strength', ctor: [14], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Momentum Oscillators', cls: 'Stochastic', label: 'Stochastic', ctor: [14, 3], sig: 'hlc', pane: 'sub', render: 'multi', len: true },
+  { fam: 'Momentum Oscillators', cls: 'CCI', label: 'CCI — Commodity Channel', ctor: [20], sig: 'hlc', pane: 'sub', render: 'line', len: true },
+  { fam: 'Momentum Oscillators', cls: 'WilliamsR', label: 'Williams %R', ctor: [14], sig: 'hlc', pane: 'sub', render: 'line', len: true },
+
   { fam: 'Trend & Directional', cls: 'MACD', label: 'MACD', ctor: [12, 26, 9], sig: 'scalar', pane: 'sub', render: 'multi', len: true },
+  { fam: 'Trend & Directional', cls: 'ADX', label: 'ADX / DMI', ctor: [14], sig: 'hlc', pane: 'sub', render: 'multi', len: true },
+  { fam: 'Trend & Directional', cls: 'Aroon', label: 'Aroon', ctor: [14], sig: 'hl', pane: 'sub', render: 'multi', len: true },
+  { fam: 'Trend & Directional', cls: 'TRIX', label: 'TRIX', ctor: [15], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+
   { fam: 'Price Oscillators', cls: 'PPO', label: 'PPO — Percentage Price Osc', ctor: [12, 26], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Price Oscillators', cls: 'APO', label: 'APO — Absolute Price Osc', ctor: [12, 26], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Price Oscillators', cls: 'Coppock', label: 'Coppock Curve', ctor: [14, 11, 10], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Price Oscillators', cls: 'BalanceOfPower', label: 'Balance of Power', ctor: [], sig: 'ohlc', pane: 'sub', render: 'line' },
+
   { fam: 'Volatility & Bands', cls: 'BollingerBands', label: 'Bollinger Bands', ctor: [20, 2], sig: 'scalar', pane: 'price', render: 'multi', len: true, fields: ['upper', 'middle', 'lower'] },
+  { fam: 'Volatility & Bands', cls: 'ATR', label: 'ATR — Average True Range', ctor: [14], sig: 'hlc', pane: 'sub', render: 'line', len: true },
+  { fam: 'Volatility & Bands', cls: 'Keltner', label: 'Keltner Channel', ctor: [20, 10, 2], sig: 'hlc', pane: 'price', render: 'multi', len: true },
+  { fam: 'Volatility & Bands', cls: 'Donchian', label: 'Donchian Channel', ctor: [20], sig: 'hl', pane: 'price', render: 'multi', len: true },
+
   { fam: 'Bands & Channels', cls: 'MaEnvelope', label: 'MA Envelope', ctor: [20, 2.5], sig: 'scalar', pane: 'price', render: 'multi', len: true },
+  { fam: 'Bands & Channels', cls: 'StarcBands', label: 'STARC Bands', ctor: [20, 10, 2], sig: 'hlc', pane: 'price', render: 'multi', len: true },
+  { fam: 'Bands & Channels', cls: 'AtrBands', label: 'ATR Bands', ctor: [20, 2], sig: 'hlc', pane: 'price', render: 'multi', len: true },
+  { fam: 'Bands & Channels', cls: 'LinRegChannel', label: 'Linear Regression Channel', ctor: [20, 2], sig: 'scalar', pane: 'price', render: 'multi', len: true },
+
   { fam: 'Trailing Stops', cls: 'SuperTrend', label: 'SuperTrend', ctor: [10, 3], sig: 'hlc', pane: 'price', render: 'multi', len: true, fields: ['value'] },
+  { fam: 'Trailing Stops', cls: 'PSAR', label: 'Parabolic SAR', ctor: [0.02, 0.02, 0.2], sig: 'hlc', pane: 'price', render: 'line' },
+  { fam: 'Trailing Stops', cls: 'ChandelierExit', label: 'Chandelier Exit', ctor: [22, 3], sig: 'hlc', pane: 'price', render: 'multi', len: true },
+  { fam: 'Trailing Stops', cls: 'AtrTrailingStop', label: 'ATR Trailing Stop', ctor: [14, 3], sig: 'hlc', pane: 'price', render: 'line', len: true },
+
   { fam: 'Volume', cls: 'OBV', label: 'OBV — On-Balance Volume', ctor: [], sig: 'cv', pane: 'sub', render: 'line' },
+  { fam: 'Volume', cls: 'VWAP', label: 'VWAP', ctor: [], sig: 'hlcv', pane: 'price', render: 'line' },
+  { fam: 'Volume', cls: 'ChaikinMoneyFlow', label: 'Chaikin Money Flow', ctor: [20], sig: 'hlcv', pane: 'sub', render: 'line', len: true },
+  { fam: 'Volume', cls: 'ADL', label: 'Accumulation / Distribution', ctor: [], sig: 'hlcv', pane: 'sub', render: 'line' },
+
   { fam: 'Price Statistics', cls: 'ZScore', label: 'Z-Score', ctor: [20], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Price Statistics', cls: 'LinearRegression', label: 'Linear Regression', ctor: [20], sig: 'scalar', pane: 'price', render: 'line', len: true },
+  { fam: 'Price Statistics', cls: 'LinRegSlope', label: 'Lin-Reg Slope', ctor: [20], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Price Statistics', cls: 'Variance', label: 'Variance', ctor: [20], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+
   { fam: 'Ehlers / Cycle (DSP)', cls: 'FisherTransform', label: 'Fisher Transform', ctor: [10], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Ehlers / Cycle (DSP)', cls: 'MAMA', label: 'MAMA — MESA Adaptive MA', ctor: [0.5, 0.05], sig: 'scalar', pane: 'price', render: 'multi' },
+  { fam: 'Ehlers / Cycle (DSP)', cls: 'SuperSmoother', label: 'Super Smoother', ctor: [10], sig: 'scalar', pane: 'price', render: 'line', len: true },
+  { fam: 'Ehlers / Cycle (DSP)', cls: 'InverseFisherTransform', label: 'Inverse Fisher Transform', ctor: [1], sig: 'scalar', pane: 'sub', render: 'line' },
+
   { fam: 'Pivots & S/R', cls: 'ClassicPivots', label: 'Classic Pivots', ctor: [], sig: 'hlc', pane: 'price', render: 'multi' },
+  { fam: 'Pivots & S/R', cls: 'FibonacciPivots', label: 'Fibonacci Pivots', ctor: [], sig: 'hlc', pane: 'price', render: 'multi' },
+  { fam: 'Pivots & S/R', cls: 'Camarilla', label: 'Camarilla Pivots', ctor: [], sig: 'hlc', pane: 'price', render: 'multi' },
+  { fam: 'Pivots & S/R', cls: 'ZigZag', label: 'ZigZag', ctor: [0.05], sig: 'hl', pane: 'price', render: 'multi', fields: ['swing'] },
+
   { fam: 'DeMark', cls: 'TDDeMarker', label: 'TD DeMarker', ctor: [13], sig: 'hl', pane: 'sub', render: 'line', len: true },
+  { fam: 'DeMark', cls: 'TDSetup', label: 'TD Setup', ctor: [4, 9], sig: 'hlc', pane: 'sub', render: 'line', len: true },
+  { fam: 'DeMark', cls: 'TDREI', label: 'TD Range Expansion Index', ctor: [5], sig: 'hl', pane: 'sub', render: 'line', len: true },
+
   { fam: 'Ichimoku & Charts', cls: 'Ichimoku', label: 'Ichimoku Cloud', ctor: [9, 26, 52, 26], sig: 'hlc', pane: 'price', render: 'multi', len: true },
+  { fam: 'Ichimoku & Charts', cls: 'HeikinAshi', label: 'Heikin-Ashi (close)', ctor: [], sig: 'ohlc', pane: 'price', render: 'multi', fields: ['close'] },
+
   { fam: 'Candlestick Patterns', cls: 'Engulfing', label: 'Engulfing', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+  { fam: 'Candlestick Patterns', cls: 'Doji', label: 'Doji', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+  { fam: 'Candlestick Patterns', cls: 'Hammer', label: 'Hammer', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+  { fam: 'Candlestick Patterns', cls: 'MorningEveningStar', label: 'Morning / Evening Star', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+
   { fam: 'Market Profile', cls: 'ValueArea', label: 'Value Area', ctor: [20, 24, 0.7], sig: 'hlv', pane: 'price', render: 'multi', len: true },
+  { fam: 'Market Profile', cls: 'InitialBalance', label: 'Initial Balance', ctor: [20], sig: 'hl', pane: 'price', render: 'multi', len: true },
+  { fam: 'Market Profile', cls: 'OpeningRange', label: 'Opening Range', ctor: [20], sig: 'hlc', pane: 'price', render: 'multi', len: true, fields: ['high', 'low'] },
+
   { fam: 'Risk / Performance', cls: 'SharpeRatio', label: 'Sharpe Ratio', ctor: [20, 0], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Risk / Performance', cls: 'SortinoRatio', label: 'Sortino Ratio', ctor: [20, 0], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Risk / Performance', cls: 'MaxDrawdown', label: 'Max Drawdown', ctor: [20], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+  { fam: 'Risk / Performance', cls: 'CalmarRatio', label: 'Calmar Ratio', ctor: [20], sig: 'scalar', pane: 'sub', render: 'line', len: true },
+
   { fam: 'Seasonality & Session', cls: 'SessionVwap', label: 'Session VWAP', ctor: [0], sig: 'ohlcv_ts', pane: 'price', render: 'line' },
+  { fam: 'Seasonality & Session', cls: 'SessionHighLow', label: 'Session High / Low', ctor: [0], sig: 'ohlcv_ts', pane: 'price', render: 'multi' },
+  { fam: 'Seasonality & Session', cls: 'SessionRange', label: 'Session Range', ctor: [0], sig: 'ohlcv_ts', pane: 'sub', render: 'multi' },
+
   { fam: 'Chart Patterns', cls: 'HeadAndShoulders', label: 'Head & Shoulders', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+  { fam: 'Chart Patterns', cls: 'DoubleTopBottom', label: 'Double Top / Bottom', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+  { fam: 'Chart Patterns', cls: 'Triangle', label: 'Triangle', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+
   { fam: 'Harmonic Patterns', cls: 'Gartley', label: 'Gartley', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+  { fam: 'Harmonic Patterns', cls: 'Butterfly', label: 'Butterfly', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+  { fam: 'Harmonic Patterns', cls: 'Bat', label: 'Bat', ctor: [], sig: 'ohlc', pane: 'price', render: 'markers' },
+
   { fam: 'Fibonacci', cls: 'FibRetracement', label: 'Fibonacci Retracement', ctor: [], sig: 'hl', pane: 'price', render: 'multi' },
+  { fam: 'Fibonacci', cls: 'FibExtension', label: 'Fibonacci Extension', ctor: [], sig: 'hl', pane: 'price', render: 'multi' },
+  { fam: 'Fibonacci', cls: 'GoldenPocket', label: 'Golden Pocket', ctor: [], sig: 'hl', pane: 'price', render: 'multi' },
 ]
 
 // Group picks by family for the <optgroup> selector.
@@ -129,6 +200,7 @@ function feed(ind: any, sig: Sig, k: Candle, clock: number): any {
     case 'hlc': return ind.update(k.high, k.low, k.close)
     case 'hl': return ind.update(k.high, k.low)
     case 'cv': return ind.update(k.close, k.volume)
+    case 'hlcv': return ind.update(k.high, k.low, k.close, k.volume)
     case 'hlv': return ind.update(k.high, k.low, k.volume)
     case 'ohlcv_ts': return ind.update(k.open, k.high, k.low, k.close, k.volume, BigInt(clock))
   }
