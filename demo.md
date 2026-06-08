@@ -12,30 +12,42 @@ producing every indicator value you see.
 
 <WasmDemo />
 
+The picker carries the best-known indicators from each family — moving
+averages, oscillators, bands, trailing stops, pivots, Ichimoku,
+candlestick / chart / harmonic patterns, Fibonacci and more. Whatever
+its shape — a single line, a set of bands, a sub-pane oscillator, or
+pattern markers — it is the same Rust kernel computing it tick by tick.
+
 ## What's happening
 
-1. A pseudo-random price walk seeds a synthetic asset (start = 100,
-   small drift + per-tick volatility).
+1. A pseudo-random walk generates a synthetic **OHLCV candle** stream
+   (start = 100), shaped live by the **Volatility** and **Trend**
+   sliders.
 2. The wickra-wasm bundle is fetched once (~80 KB gzipped) and the
    indicator class you pick is instantiated.
-3. Every tick is fed into the indicator's `update(price)` method — a
-   single O(1) state-machine step. Output is plotted live.
-4. Hitting **▶ Stream** advances the walk in real time at ~12 fps so
-   you can watch the indicator settle in.
+3. Every candle is fed into the indicator through its native input —
+   close, full OHLC, high/low, or close + volume — in a single O(1)
+   state-machine step. Single values draw a line, multi-output
+   indicators draw a band per field, and pattern detectors drop
+   markers on the chart.
+4. Hitting **▶ Stream** advances the feed in real time; the **Stream
+   speed** slider (1–10) sets how many candles per second arrive, and
+   **⏸ Pause** freezes it without losing state.
 
 ## Try this
 
-- Drop the period to **5** and switch to **RSI** — watch the
-  oscillator pin against the 0 / 100 rails on a sharp move.
-- Set period to **80** on **HMA** vs **EMA** — the Hull moving average
-  hugs the price noticeably tighter.
-- Bump **Historical ticks** to 5 000 — the initial pass throughput
-  number jumps because the JS-to-WASM boundary is amortised across
-  more updates.
+- Switch to **Bollinger Bands**, then crank **Volatility** up — the
+  band envelope visibly widens as the synthetic asset gets noisier.
+- Pick **Engulfing** (Candlestick Patterns) and toggle **Candles** on —
+  arrows mark each detected pattern against the real candle bodies.
+- Pull **Trend** toward *bull* and watch **SuperTrend** flip its stop
+  line and ride the move.
+- Raise **Stream speed** to 10 — the chart fills fast while every tick
+  is still a real O(1) WASM update, not a replay.
 
 ## Wiring this into your own project
 
-The chart on this page is ~250 lines of Vue + lightweight-charts; the
+The chart on this page is ~450 lines of Vue + lightweight-charts; the
 indicator math is one constructor call and `update()` per tick.
 
 ```javascript

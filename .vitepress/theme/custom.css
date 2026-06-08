@@ -179,6 +179,37 @@
   background: var(--wk-chart-bg-dark);
 }
 
+/* TradingView-style value legend under the chart — carries the live numbers so
+   the price axis itself never has to (no overlapping on-chart value tags). */
+.wk-demo-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-top: 10px;
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+}
+.wk-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  white-space: nowrap;
+}
+.wk-legend-chip strong {
+  color: var(--vp-c-text-1);
+}
+.wk-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
 .wk-demo-stats {
   display: flex;
   flex-wrap: wrap;
@@ -405,7 +436,7 @@
    sidebar/aside clearance and the back-to-top offset all track it across
    breakpoints. */
 :root {
-  --wk-footer-h: 76px;
+  --wk-footer-h: 80px;
 }
 
 /* The per-page git "Updated" date is shown inside the custom footer instead of
@@ -415,7 +446,8 @@
 }
 
 /* Fixed bar pinned to the bottom of the viewport — always visible while
-   scrolling, on every page. */
+   scrolling, on every page (badges + license + copyright + per-page "Updated"
+   date + About/Privacy links). */
 .wk-footer {
   position: fixed;
   left: 0;
@@ -450,10 +482,10 @@
   display: inline-flex;
 }
 .wk-footer-badges img {
-  height: 18px;
+  height: 16px;
   /* width:auto lets the browser derive each badge's box from its width/height
      attributes, so the row's space is reserved before the SVGs load (no
-     reflow) while the height stays a constant 18px. */
+     reflow) while the height stays a constant 16px. */
   width: auto;
   display: block;
 }
@@ -512,13 +544,13 @@
    footer is taller — grow the reserved height accordingly. */
 @media (max-width: 768px) {
   :root {
-    --wk-footer-h: 116px;
+    --wk-footer-h: 120px;
   }
   .wk-footer {
     padding: 8px 14px;
   }
   .wk-footer-badges img {
-    height: 17px;
+    height: 15px;
   }
   .wk-footer-meta .wk-sep {
     margin: 0 6px;
@@ -533,7 +565,7 @@
 /* Small phones. */
 @media (max-width: 420px) {
   :root {
-    --wk-footer-h: 140px;
+    --wk-footer-h: 146px;
   }
   .wk-footer-meta {
     font-size: 11px;
@@ -545,10 +577,10 @@
 @media (min-width: 2000px) {
   :root {
     --vp-layout-max-width: 1760px;
-    --wk-footer-h: 84px;
+    --wk-footer-h: 88px;
   }
   .wk-footer-badges img {
-    height: 21px;
+    height: 19px;
   }
   .wk-footer-meta {
     font-size: 13px;
@@ -557,10 +589,10 @@
 @media (min-width: 3200px) {
   :root {
     --vp-layout-max-width: 2240px;
-    --wk-footer-h: 96px;
+    --wk-footer-h: 100px;
   }
   .wk-footer-badges img {
-    height: 25px;
+    height: 22px;
   }
   .wk-footer-meta {
     font-size: 15px;
