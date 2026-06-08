@@ -44,8 +44,7 @@ const updated = computed(() => {
         <span class="wk-sep">·</span>
         <span>Updated {{ updated }}</span>
       </template>
-    </p>
-    <p class="wk-footer-meta wk-footer-meta-sub">
+      <span class="wk-sep">·</span>
       <a href="/about">About</a>
       <span class="wk-sep">·</span>
       <a href="/privacy">Privacy</a>

@@ -10,9 +10,8 @@ const { Layout } = DefaultTheme
   <Layout>
     <!-- Replace the default global footer with our own (badges + license +
          copyright + per-page "Updated" date + About/Privacy), rendered as a
-         static block at the end of the page, plus a floating back-to-top
-         control. The built-in VPFooter / the doc-footer "Updated" line are
-         hidden in custom.css. -->
+         fixed bar, plus a floating back-to-top control. The built-in VPFooter /
+         the doc-footer "Updated" line are hidden in custom.css. -->
     <template #layout-bottom>
       <SiteFooter />
       <BackToTop />
