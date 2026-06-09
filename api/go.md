@@ -1,0 +1,83 @@
+---
+title: Go API
+description: Wickra in Go — go get the cgo binding, idiomatic indicator types with New/Update/Batch/Reset/Close, batch + streaming, and (value, ok) multi-output over the C ABI.
+---
+
+# Go
+
+The Go binding is a cgo stecker on the C ABI hub. It links the prebuilt Wickra
+C ABI library and exposes all 514 indicators as idiomatic Go types.
+
+```bash
+go get github.com/wickra-lib/wickra/bindings/go
+```
+
+- **Distribution:** Go module (`github.com/wickra-lib/wickra/bindings/go`), tagged
+  as a subdirectory module; the native libraries ship per target triple.
+- **Built on:** the [C ABI hub](/api/c) via cgo, with wrappers generated from
+  `wickra.h`.
+- **Memory model:** opaque handles freed by `Close()`, with a
+  `runtime.SetFinalizer` backstop; `defer x.Close()` for prompt cleanup.
+
+## The type shape
+
+Every indicator is a type with `Update` / `Batch` / `Reset` / `Close`. Use
+`defer x.Close()` so the native handle is freed promptly.
+
+```go
+import wickra "github.com/wickra-lib/wickra/bindings/go"
+
+sma, err := wickra.NewSma(14) // ErrInvalidParams on invalid params
+if err != nil {
+	panic(err)
+}
+defer sma.Close()
+
+v := sma.Update(42.0) // NaN while warming up
+sma.Reset()
+```
+
+## Streaming
+
+```go
+rsi, _ := wickra.NewRsi(14)
+defer rsi.Close()
+for _, price := range feed {
+	v := rsi.Update(price)
+	if !math.IsNaN(v) && v > 70.0 {
+		fmt.Printf("overbought %.2f\n", v)
+	}
+}
+```
+
+## Batch (one call over a whole series)
+
+```go
+ema, _ := wickra.NewEma(20)
+defer ema.Close()
+values := ema.Batch(prices) // NaN at warmup positions
+```
+
+## Multi-output indicators
+
+Indicators with several outputs return a value plus a `bool` — `false` while
+warming up:
+
+```go
+macd, _ := wickra.NewMacdIndicator(12, 26, 9)
+defer macd.Close()
+for _, price := range feed {
+	if m, ok := macd.Update(price); ok {
+		fmt.Printf("macd=%.4f signal=%.4f hist=%.4f\n", m.Macd, m.Signal, m.Histogram)
+	}
+}
+```
+
+Candle-input indicators take OHLCV plus a timestamp, e.g.
+`atr.Update(open, high, low, close, volume, timestamp)`.
+
+## More
+
+- [Quickstart: Go (docs)](https://docs.wickra.org/Quickstart-Go)
+- [Examples](https://github.com/wickra-lib/wickra/tree/main/examples/go)
+- [Benchmarks](/benchmarks)

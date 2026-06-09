@@ -53,6 +53,7 @@ const installTabs = [
   { label: 'WASM',   lang: 'bash', code: 'npm install wickra-wasm' },
   { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
   { label: 'C#',     lang: 'bash', code: 'dotnet add package Wickra' },
+  { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra/bindings/go' },
 ]
 
 const pyCode = `import wickra as ta
@@ -109,6 +110,17 @@ foreach (var price in feed)
         Console.WriteLine($"overbought {v:F2}");
 }`
 
+const goCode = `import wickra "github.com/wickra-lib/wickra/bindings/go"
+
+rsi, _ := wickra.NewRsi(14)
+defer rsi.Close()
+for _, price := range liveFeed {
+    v := rsi.Update(price)
+    if !math.IsNaN(v) && v > 70.0 {
+        fmt.Printf("overbought %.2f\\n", v)
+    }
+}`
+
 const snippetTabs = [
   { label: 'Python', lang: 'python',     code: pyCode },
   { label: 'Node',   lang: 'javascript', code: nodeCode },
@@ -116,6 +128,7 @@ const snippetTabs = [
   { label: 'WASM',   lang: 'javascript', code: wasmCode },
   { label: 'C',      lang: 'c',          code: cCode },
   { label: 'C#',     lang: 'csharp',     code: csharpCode },
+  { label: 'Go',     lang: 'go',         code: goCode },
 ]
 </script>
 
@@ -166,7 +179,7 @@ stays flat even after a session has run for hours. For **backtesting**, you can
 replay a full history through that very same struct and trust that batch and
 streaming produce identical output — the equivalence is pinned by
 reference-value tests. For **research**, the Rust core and the Python, Node,
-WASM, C and C# bindings all share one implementation, so a notebook prototype and a
+WASM, C, C# and Go bindings all share one implementation, so a notebook prototype and a
 production service compute the exact same numbers.
 
 ## The full indicator catalogue {#catalogue}
