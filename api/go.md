@@ -9,11 +9,12 @@ The Go binding is a cgo stecker on the C ABI hub. It links the prebuilt Wickra
 C ABI library and exposes all 514 indicators as idiomatic Go types.
 
 ```bash
-go get github.com/wickra-lib/wickra/bindings/go
+go get github.com/wickra-lib/wickra-go
 ```
 
-- **Distribution:** Go module (`github.com/wickra-lib/wickra/bindings/go`), tagged
-  as a subdirectory module; the native libraries ship per target triple.
+- **Distribution:** standalone Go module (`github.com/wickra-lib/wickra-go`) with
+  the prebuilt native libraries committed per platform, so `go get` builds with
+  no extra steps.
 - **Built on:** the [C ABI hub](/api/c) via cgo, with wrappers generated from
   `wickra.h`.
 - **Memory model:** opaque handles freed by `Close()`, with a
@@ -25,7 +26,7 @@ Every indicator is a type with `Update` / `Batch` / `Reset` / `Close`. Use
 `defer x.Close()` so the native handle is freed promptly.
 
 ```go
-import wickra "github.com/wickra-lib/wickra/bindings/go"
+import wickra "github.com/wickra-lib/wickra-go"
 
 sma, err := wickra.NewSma(14) // ErrInvalidParams on invalid params
 if err != nil {
