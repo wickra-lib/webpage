@@ -54,6 +54,7 @@ const installTabs = [
   { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
   { label: 'C#',     lang: 'bash', code: 'dotnet add package Wickra' },
   { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra/bindings/go' },
+  { label: 'R',      lang: 'bash', code: 'R CMD INSTALL bindings/r  # links the C ABI hub' },
 ]
 
 const pyCode = `import wickra as ta
@@ -121,6 +122,14 @@ for _, price := range liveFeed {
     }
 }`
 
+const rCode = `library(wickra)
+
+rsi <- Rsi(14)
+for (price in live_feed) {
+  v <- update(rsi, price)
+  if (!is.na(v) && v > 70) message("overbought ", v)
+}`
+
 const snippetTabs = [
   { label: 'Python', lang: 'python',     code: pyCode },
   { label: 'Node',   lang: 'javascript', code: nodeCode },
@@ -129,6 +138,7 @@ const snippetTabs = [
   { label: 'C',      lang: 'c',          code: cCode },
   { label: 'C#',     lang: 'csharp',     code: csharpCode },
   { label: 'Go',     lang: 'go',         code: goCode },
+  { label: 'R',      lang: 'r',          code: rCode },
 ]
 </script>
 
@@ -179,7 +189,7 @@ stays flat even after a session has run for hours. For **backtesting**, you can
 replay a full history through that very same struct and trust that batch and
 streaming produce identical output — the equivalence is pinned by
 reference-value tests. For **research**, the Rust core and the Python, Node,
-WASM, C, C# and Go bindings all share one implementation, so a notebook prototype and a
+WASM, C, C#, Go and R bindings all share one implementation, so a notebook prototype and a
 production service compute the exact same numbers.
 
 ## The full indicator catalogue {#catalogue}
