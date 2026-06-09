@@ -54,7 +54,7 @@ const installTabs = [
   { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
   { label: 'C#',     lang: 'bash', code: 'dotnet add package Wickra' },
   { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra/bindings/go' },
-  { label: 'Java',   lang: 'xml',  code: '<!-- Maven Central -->\n<dependency>\n  <groupId>org.wickra</groupId>\n  <artifactId>wickra</artifactId>\n  <version>0.7.8</version>\n</dependency>' },
+  { label: 'Java',   lang: 'xml',  code: '<!-- Maven Central -->\n<dependency>\n  <groupId>org.wickra</groupId>\n  <artifactId>wickra</artifactId>\n  <version>0.7.9</version>\n</dependency>' },
   { label: 'R',      lang: 'bash', code: 'R CMD INSTALL bindings/r  # links the C ABI hub' },
 ]
 
