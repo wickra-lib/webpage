@@ -53,7 +53,7 @@ const installTabs = [
   { label: 'WASM',   lang: 'bash', code: 'npm install wickra-wasm' },
   { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
   { label: 'C#',     lang: 'bash', code: 'dotnet add package Wickra' },
-  { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra/bindings/go' },
+  { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra-go' },
   { label: 'Java',   lang: 'xml',  code: '<!-- Maven Central -->\n<dependency>\n  <groupId>org.wickra</groupId>\n  <artifactId>wickra</artifactId>\n  <version>0.7.9</version>\n</dependency>' },
   { label: 'R',      lang: 'bash', code: 'R CMD INSTALL bindings/r  # links the C ABI hub' },
 ]
@@ -112,7 +112,7 @@ foreach (var price in feed)
         Console.WriteLine($"overbought {v:F2}");
 }`
 
-const goCode = `import wickra "github.com/wickra-lib/wickra/bindings/go"
+const goCode = `import wickra "github.com/wickra-lib/wickra-go"
 
 rsi, _ := wickra.NewRsi(14)
 defer rsi.Close()
