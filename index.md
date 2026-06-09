@@ -6,7 +6,7 @@ titleTemplate: false
 hero:
   name: "Wickra"
   text: "Streaming-first technical indicators."
-  tagline: "514 indicators with a Rust core and Python, Node, WASM, and C ABI bindings. Same code for backtest and live tick. Install-free."
+  tagline: "514 indicators with a Rust core and Python, Node, WASM, C ABI, and .NET bindings. Same code for backtest and live tick. Install-free."
   image:
     src: /wickra-mark.svg
     alt: Wickra
@@ -52,6 +52,7 @@ const installTabs = [
   { label: 'Rust',   lang: 'bash', code: 'cargo add wickra' },
   { label: 'WASM',   lang: 'bash', code: 'npm install wickra-wasm' },
   { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
+  { label: 'C#',     lang: 'bash', code: 'dotnet add package Wickra' },
 ]
 
 const pyCode = `import wickra as ta
@@ -98,12 +99,23 @@ for (size_t i = 0; i < n; ++i) {
 }
 wickra_rsi_free(rsi);`
 
+const csharpCode = `using Wickra;
+
+using var rsi = new Rsi(14);
+foreach (var price in feed)
+{
+    var v = rsi.Update(price);
+    if (double.IsFinite(v) && v > 70.0)
+        Console.WriteLine($"overbought {v:F2}");
+}`
+
 const snippetTabs = [
   { label: 'Python', lang: 'python',     code: pyCode },
   { label: 'Node',   lang: 'javascript', code: nodeCode },
   { label: 'Rust',   lang: 'rust',       code: rustCode },
   { label: 'WASM',   lang: 'javascript', code: wasmCode },
   { label: 'C',      lang: 'c',          code: cCode },
+  { label: 'C#',     lang: 'csharp',     code: csharpCode },
 ]
 </script>
 
@@ -154,7 +166,7 @@ stays flat even after a session has run for hours. For **backtesting**, you can
 replay a full history through that very same struct and trust that batch and
 streaming produce identical output — the equivalence is pinned by
 reference-value tests. For **research**, the Rust core and the Python, Node,
-WASM and C bindings all share one implementation, so a notebook prototype and a
+WASM, C and C# bindings all share one implementation, so a notebook prototype and a
 production service compute the exact same numbers.
 
 ## The full indicator catalogue {#catalogue}
