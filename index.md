@@ -54,6 +54,7 @@ const installTabs = [
   { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
   { label: 'C#',     lang: 'bash', code: 'dotnet add package Wickra' },
   { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra/bindings/go' },
+  { label: 'Java',   lang: 'xml',  code: '<!-- Maven Central -->\n<dependency>\n  <groupId>org.wickra</groupId>\n  <artifactId>wickra</artifactId>\n  <version>0.7.9</version>\n</dependency>' },
   { label: 'R',      lang: 'bash', code: 'R CMD INSTALL bindings/r  # links the C ABI hub' },
 ]
 
@@ -130,6 +131,16 @@ for (price in live_feed) {
   if (!is.na(v) && v > 70) message("overbought ", v)
 }`
 
+const javaCode = `import org.wickra.Rsi;
+
+try (Rsi rsi = new Rsi(14)) {
+    for (double price : liveFeed) {
+        double v = rsi.update(price);
+        if (Double.isFinite(v) && v > 70.0)
+            System.out.printf("overbought %.2f%n", v);
+    }
+}`
+
 const snippetTabs = [
   { label: 'Python', lang: 'python',     code: pyCode },
   { label: 'Node',   lang: 'javascript', code: nodeCode },
@@ -138,6 +149,7 @@ const snippetTabs = [
   { label: 'C',      lang: 'c',          code: cCode },
   { label: 'C#',     lang: 'csharp',     code: csharpCode },
   { label: 'Go',     lang: 'go',         code: goCode },
+  { label: 'Java',   lang: 'java',       code: javaCode },
   { label: 'R',      lang: 'r',          code: rCode },
 ]
 </script>
@@ -189,7 +201,7 @@ stays flat even after a session has run for hours. For **backtesting**, you can
 replay a full history through that very same struct and trust that batch and
 streaming produce identical output — the equivalence is pinned by
 reference-value tests. For **research**, the Rust core and the Python, Node,
-WASM, C, C#, Go and R bindings all share one implementation, so a notebook prototype and a
+WASM, C, C#, Go, Java and R bindings all share one implementation, so a notebook prototype and a
 production service compute the exact same numbers.
 
 ## The full indicator catalogue {#catalogue}

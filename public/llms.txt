@@ -1,6 +1,6 @@
 # Wickra
 
-> Streaming-first technical indicators: one Rust core with Python, Node, WASM, C ABI, .NET, Go, and R bindings. The same code runs for backtesting and live ticks, and every indicator updates in O(1) constant time per tick. The native packages are install-free — no C toolchain required.
+> Streaming-first technical indicators: one Rust core with Python, Node, WASM, C ABI, .NET, Go, Java, and R bindings. The same code runs for backtesting and live ticks, and every indicator updates in O(1) constant time per tick. The native packages are install-free — no C toolchain required.
 
 Wickra implements each indicator once in Rust as a state machine, then re-exports that single implementation to Python (PyO3), Node (napi-rs), the browser (wasm-bindgen), and Rust itself, plus a C ABI (cbindgen) that any C-capable language — C, C++, Go, C#, Java, R — links against. Batch and streaming evaluation are guaranteed to produce identical output, pinned by reference-value tests. Released under the PolyForm Noncommercial License 1.0.0.
 
@@ -14,6 +14,7 @@ Wickra implements each indicator once in Rust as a state machine, then re-export
 - [Quickstart: C](https://docs.wickra.org/Quickstart-C): Link the generated wickra.h + library from C, C++ or any C-capable language.
 - [Quickstart: C#](https://docs.wickra.org/Quickstart-CSharp): `dotnet add package Wickra` and idiomatic .NET indicator classes over the C ABI.
 - [Quickstart: Go](https://docs.wickra.org/Quickstart-Go): `go get` the cgo binding and idiomatic Go indicator types over the C ABI.
+- [Quickstart: Java](https://docs.wickra.org/Quickstart-Java): `org.wickra:wickra` on Maven Central and idiomatic Java indicator classes over the C ABI via the Java FFM API.
 - [Quickstart: R](https://docs.wickra.org/Quickstart-R): install the `.Call` binding and idiomatic R indicator constructors over the C ABI.
 - [Streaming vs Batch](https://docs.wickra.org/Streaming-vs-Batch): What the batch/streaming equivalence guarantee actually means.
 
