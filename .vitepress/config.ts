@@ -28,9 +28,9 @@ const structuredData = {
       url: 'https://wickra.org/',
       applicationCategory: 'DeveloperApplication',
       operatingSystem: 'Windows, macOS, Linux, WebAssembly',
-      programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly', 'C'],
+      programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly', 'C', 'C#'],
       description:
-        'Streaming-first technical indicators with a Rust core and Python, Node, WASM, and C ABI bindings. Same code for backtesting and live ticks.',
+        'Streaming-first technical indicators with a Rust core and Python, Node, WASM, C ABI, and .NET bindings. Same code for backtesting and live ticks.',
       license: 'https://polyformproject.org/licenses/noncommercial/1.0.0/',
       publisher: { '@id': 'https://wickra.org/#organization' },
     },
@@ -40,7 +40,7 @@ const structuredData = {
 export default defineConfig({
   title: 'Wickra',
   description:
-    'Streaming-first technical indicators with a Rust core and Python, Node, WASM, and C ABI bindings — 514 indicators, install-free. Same code for backtest and live tick.',
+    'Streaming-first technical indicators with a Rust core and Python, Node, WASM, C ABI, and .NET bindings — 514 indicators, install-free. Same code for backtest and live tick.',
   lang: 'en-US',
   cleanUrls: true,
 
@@ -71,7 +71,7 @@ export default defineConfig({
       {
         property: 'og:description',
         content:
-          '514 indicators with a Rust core and Python / Node / WASM / C bindings. Same code for backtest and live tick. Install-free.',
+          '514 indicators with a Rust core and Python / Node / WASM / C / C# bindings. Same code for backtest and live tick. Install-free.',
       },
     ],
     ['meta', { property: 'og:image', content: 'https://wickra.org/og-banner.webp' }],
@@ -114,6 +114,7 @@ export default defineConfig({
           { text: 'Node', link: 'https://docs.wickra.org/Quickstart-Node' },
           { text: 'WASM', link: 'https://docs.wickra.org/Quickstart-WASM' },
           { text: 'C', link: 'https://docs.wickra.org/Quickstart-C' },
+          { text: 'C#', link: 'https://docs.wickra.org/Quickstart-CSharp' },
         ],
       },
       { text: 'Indicators', link: 'https://docs.wickra.org/Indicators-Overview' },
@@ -125,6 +126,7 @@ export default defineConfig({
           { text: 'Node', link: '/api/node' },
           { text: 'WASM', link: '/api/wasm' },
           { text: 'C', link: '/api/c' },
+          { text: 'C#', link: '/api/csharp' },
         ],
       },
       {
@@ -133,6 +135,7 @@ export default defineConfig({
           { text: 'crates.io', link: 'https://crates.io/crates/wickra' },
           { text: 'PyPI', link: 'https://pypi.org/project/wickra/' },
           { text: 'npm', link: 'https://www.npmjs.com/package/wickra' },
+          { text: 'NuGet', link: 'https://www.nuget.org/packages/Wickra' },
         ],
       },
       {
@@ -156,6 +159,7 @@ export default defineConfig({
             { text: 'Node', link: '/api/node' },
             { text: 'WASM', link: '/api/wasm' },
             { text: 'C', link: '/api/c' },
+            { text: 'C#', link: '/api/csharp' },
           ],
         },
         {
