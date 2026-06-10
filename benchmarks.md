@@ -144,5 +144,9 @@ same tables.
   — the Rust cross-library benchmark harness.
 - [Bench workflow](https://github.com/wickra-lib/wickra/actions/workflows/bench.yml)
   — nightly run on the GitHub-hosted Linux runner, archived as build artefacts.
+- [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md)
+  — per-binding throughput benchmarks: raw updates/sec for each language binding
+  (C, C#, Go, Java, Python, R, WASM, plus the Rust core baseline). These measure
+  each binding's FFI overhead, not the cross-library comparison shown above.
 - [Streaming-vs-Batch (docs)](https://docs.wickra.org/Streaming-vs-Batch)
   — what the equivalence guarantee actually means.
