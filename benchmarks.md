@@ -126,6 +126,34 @@ micro-benchmark — the
 [project README](https://github.com/wickra-lib/wickra#benchmarks) carries the
 same tables.
 
+## 3 — Per-binding throughput
+
+The sections above compare Wickra against other libraries — which only exist for
+Python and Rust. Every binding calls the **same** Rust core, so this last table
+is **not** a speed claim: it measures the raw cost of crossing each language's
+FFI boundary, in million updates per second (Mupd/s), for `SMA(20)` over 200 000
+bars (median of 3, same machine as above).
+
+| Target               | streaming (Mupd/s) | batch (Mupd/s) |
+|----------------------|-------------------:|---------------:|
+| Rust core (no FFI)   |                391 |            500 |
+| C                    |                383 |            330 |
+| C# / .NET            |                337 |            244 |
+| Python               |                 33 |            488 |
+| Java                 |                 28 |            175 |
+| Go                   |                 24 |            400 |
+| WebAssembly          |                 19 |            167 |
+| Node.js              |                 17 |             10 |
+| R                    |                0.1 |            193 |
+
+Streaming spans three orders of magnitude — the raw C ABI (383) nearly matches
+the FFI-free Rust ceiling (391), while R's per-call interpreter overhead makes
+streaming ~2000× slower than its own batch. The single `batch` crossing
+converges near the core speed for the zero-copy bindings; Node is the outlier
+because its napi `batch` boxes every element into a JS `Array`. Reproduce with
+the per-binding `throughput` scripts — see
+[BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md).
+
 ## What the numbers do **not** say
 
 - Absolute µs values depend on CPU, memory clock, OS scheduler, and the
@@ -144,5 +172,9 @@ same tables.
   — the Rust cross-library benchmark harness.
 - [Bench workflow](https://github.com/wickra-lib/wickra/actions/workflows/bench.yml)
   — nightly run on the GitHub-hosted Linux runner, archived as build artefacts.
+- [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md)
+  — per-binding throughput benchmarks: raw updates/sec for each language binding
+  (C, C#, Go, Java, Python, R, WASM, plus the Rust core baseline). These measure
+  each binding's FFI overhead, not the cross-library comparison shown above.
 - [Streaming-vs-Batch (docs)](https://docs.wickra.org/Streaming-vs-Batch)
   — what the equivalence guarantee actually means.
