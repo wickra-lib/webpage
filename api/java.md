@@ -14,7 +14,7 @@ platform; there is nothing to compile.
 <dependency>
   <groupId>org.wickra</groupId>
   <artifactId>wickra</artifactId>
-  <version>0.7.9</version>
+  <version>0.8.3</version>
 </dependency>
 ```
 
