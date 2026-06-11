@@ -57,6 +57,37 @@ function dimsOf(svg) {
   }
 }
 
+// The release badge is sourced from shields.io's github/v/release endpoint,
+// which shares one GitHub token pool that frequently answers "Unable to select
+// next GitHub token from pool" instead of a value; the error-marker guard then
+// keeps the last good snapshot, freezing the badge (release stuck at 0.8.6 while
+// 0.8.8 was live). Resolve the version ourselves with the workflow's
+// authenticated token and point the badge at a static shields render, so it no
+// longer depends on shields' pool. On failure the shields URL in the array
+// stays as a fallback. (The go badge is locally generated, not fetched.)
+const ghJson = async (path) => {
+  const res = await fetch(`https://api.github.com/${path}`, {
+    headers: {
+      'user-agent': 'wickra-badges',
+      accept: 'application/vnd.github+json',
+      ...(process.env.GH_TOKEN ? { authorization: `Bearer ${process.env.GH_TOKEN}` } : {}),
+    },
+  })
+  if (!res.ok) throw new Error(`GitHub API ${res.status}`)
+  return res.json()
+}
+// shields static-badge message escaping: '-' -> '--', '_' -> '__', ' ' -> '_'.
+const escBadge = (s) => String(s).replace(/-/g, '--').replace(/_/g, '__').replace(/ /g, '_')
+try {
+  const release = badges.find((b) => b.slug === 'release')
+  if (release) {
+    const v = (await ghJson('repos/wickra-lib/wickra/releases/latest')).tag_name
+    release.src = `https://img.shields.io/badge/release-${escBadge(v)}-green?logo=github`
+  }
+} catch (err) {
+  console.warn(`fetch-badges: resolve release failed (${err.message}); keeping shields fallback`)
+}
+
 const manifest = []
 let failures = 0
 for (const b of badges) {
