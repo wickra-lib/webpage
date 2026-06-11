@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "lightweight-charts": "^4.2.0",
-    "wickra-wasm": "^0.8.7",
+    "wickra-wasm": "^0.8.8",
     "sharp": "^0.33.5"
   },
   "devDependencies": {
