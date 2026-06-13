@@ -29,17 +29,24 @@ platform; there is nothing to compile.
 
 ## The class shape
 
-Every indicator is an `AutoCloseable` class with `update` / `batch` / `reset`.
-Prefer try-with-resources so the native handle is freed deterministically.
+Every indicator is an `AutoCloseable` class with `update` / `batch` /
+`warmupPeriod` / `isReady` / `reset`. Prefer try-with-resources so the native
+handle is freed deterministically.
 
 ```java
 import org.wickra.Sma;
 
-try (Sma sma = new Sma(14)) {   // throws IllegalArgumentException on invalid params
-    double v = sma.update(42.0); // NaN while warming up
+try (Sma sma = new Sma(14)) {      // throws IllegalArgumentException on invalid params
+    int w = sma.warmupPeriod();    // updates until ready: 14
+    double v = sma.update(42.0);   // NaN while warming up
+    boolean ready = sma.isReady(); // false until warmed up
     sma.reset();
 } // freed at the end of the try-with-resources scope
 ```
+
+The alt-chart bar builders (`RenkoBars`, `KagiBars`, …) have no
+`warmupPeriod` / `isReady` — a candle can complete 0..n bars, so they have no
+warmup.
 
 ## Streaming
 

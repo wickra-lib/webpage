@@ -22,17 +22,24 @@ dotnet add package Wickra
 
 ## The class shape
 
-Every indicator is an `IDisposable` class with `Update` / `Batch` / `Reset`.
-Prefer `using` so the native handle is freed deterministically.
+Every indicator is an `IDisposable` class with `Update` / `Batch` /
+`WarmupPeriod` / `IsReady` / `Reset`. Prefer `using` so the native handle is
+freed deterministically.
 
 ```csharp
 using Wickra;
 
 using var sma = new Sma(14);     // throws ArgumentException on invalid params
+int w = sma.WarmupPeriod();      // updates until ready: 14
 double v = sma.Update(42.0);     // NaN while warming up
+bool ready = sma.IsReady();      // false until warmed up
 sma.Reset();
 // freed at the end of the using scope
 ```
+
+The alt-chart bar builders (`RenkoBars`, `KagiBars`, …) have no
+`WarmupPeriod` / `IsReady` — a candle can complete 0..n bars, so they have no
+warmup.
 
 ## Streaming
 

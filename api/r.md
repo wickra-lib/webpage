@@ -25,15 +25,21 @@ WICKRA_INCLUDE_DIR="$PWD/bindings/c/include" WICKRA_LIB_DIR="$PWD/target/release
 ## The object shape
 
 Every indicator is a constructor returning a `wickra_indicator` object with
-generic `update` / `batch` / `reset` methods.
+generic `update` / `batch` / `warmup_period` / `is_ready` / `reset` methods.
 
 ```r
 library(wickra)
 
-sma <- Sma(14)        # errors on invalid params
-v <- update(sma, 42)  # NA while warming up
+sma <- Sma(14)             # errors on invalid params
+w <- warmup_period(sma)    # updates until ready: 14
+v <- update(sma, 42)       # NA while warming up
+ready <- is_ready(sma)     # FALSE until warmed up
 reset(sma)
 ```
+
+The alt-chart bar builders (`RenkoBars()`, `KagiBars()`, …) have no
+`warmup_period()` / `is_ready()` — a candle can complete 0..n bars, so they have
+no warmup.
 
 ## Streaming
 
