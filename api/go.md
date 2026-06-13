@@ -22,8 +22,8 @@ go get github.com/wickra-lib/wickra-go
 
 ## The type shape
 
-Every indicator is a type with `Update` / `Batch` / `Reset` / `Close`. Use
-`defer x.Close()` so the native handle is freed promptly.
+Every indicator is a type with `Update` / `Batch` / `WarmupPeriod` / `IsReady` /
+`Reset` / `Close`. Use `defer x.Close()` so the native handle is freed promptly.
 
 ```go
 import wickra "github.com/wickra-lib/wickra-go"
@@ -34,9 +34,15 @@ if err != nil {
 }
 defer sma.Close()
 
-v := sma.Update(42.0) // NaN while warming up
+w := sma.WarmupPeriod() // updates until ready: 14
+v := sma.Update(42.0)   // NaN while warming up
+ready := sma.IsReady()  // false until warmed up
 sma.Reset()
 ```
+
+The alt-chart bar builders (`RenkoBars`, `KagiBars`, …) have no
+`WarmupPeriod` / `IsReady` — a candle can complete 0..n bars, so they have no
+warmup.
 
 ## Streaming
 

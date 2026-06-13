@@ -27,19 +27,26 @@ cc app.c -I include -L lib -lwickra -lm -o app
 gcc app.c -I include wickra.dll -lm -o app.exe
 ```
 
-## The five-function shape
+## The handle shape
 
-Every indicator is an opaque handle with `new` / `update` / `batch` / `reset` /
-`free`. There is no RAII in C, so each `new` needs exactly one `free`.
+Every indicator is an opaque handle with `new` / `update` / `batch` /
+`warmup_period` / `is_ready` / `reset` / `free`. There is no RAII in C, so each
+`new` needs exactly one `free`.
 
 ```c
 #include "wickra.h"
 
-struct Sma *sma = wickra_sma_new(14);     /* NULL on invalid params */
-double v = wickra_sma_update(sma, 42.0);  /* NaN while warming up    */
+struct Sma *sma = wickra_sma_new(14);      /* NULL on invalid params */
+size_t w = wickra_sma_warmup_period(sma);  /* updates until ready: 14 */
+double v = wickra_sma_update(sma, 42.0);   /* NaN while warming up    */
+bool ready = wickra_sma_is_ready(sma);     /* false until warmed up   */
 wickra_sma_reset(sma);
 wickra_sma_free(sma);                      /* exactly once per _new   */
 ```
+
+The alt-chart bar builders (`renko_bars`, `kagi_bars`, …) omit
+`warmup_period` / `is_ready` — a candle can complete 0..n bars, so they have no
+warmup.
 
 ## Streaming
 
