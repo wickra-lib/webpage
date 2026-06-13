@@ -368,11 +368,28 @@
 
 .wk-tabs-header {
   display: flex;
+  /* Keep the language tabs on one row and let the bar scroll horizontally when
+     they overflow (e.g. all 9 languages on a phone) — the parent's
+     `overflow: hidden` would otherwise clip the right-hand tabs out of reach. */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
   background: var(--vp-c-bg-soft);
   border-bottom: 1px solid var(--vp-c-divider);
 }
+.wk-tabs-header::-webkit-scrollbar {
+  height: 4px;
+}
+.wk-tabs-header::-webkit-scrollbar-thumb {
+  background: var(--vp-c-divider);
+  border-radius: 2px;
+}
 
 .wk-tabs-tab {
+  /* Don't let tabs shrink or wrap — the bar scrolls instead of cramming them. */
+  flex: 0 0 auto;
+  white-space: nowrap;
   padding: 10px 18px;
   font-weight: 600;
   cursor: pointer;
