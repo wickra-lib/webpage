@@ -5,7 +5,7 @@ description: Wickra in Java — org.wickra:wickra on Maven Central, idiomatic Au
 
 # Java
 
-The Java binding is a language stecker on the C ABI hub built on the Java
+The Java binding is a language shim on the C ABI hub built on the Java
 Foreign Function & Memory API (Panama). It ships on Maven Central as
 `org.wickra:wickra` with the native library prebuilt for every supported
 platform; there is nothing to compile.
