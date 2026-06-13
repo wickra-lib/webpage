@@ -1,12 +1,12 @@
 ---
 title: About
-description: What Wickra is, the design choices behind it, and why it exists — a streaming-first technical-analysis library with a Rust core and Python, Node, and WASM bindings.
+description: What Wickra is, the design choices behind it, and why it exists — a streaming-first technical-analysis library with a Rust core and Python, Node.js, and WASM bindings.
 ---
 
 # About Wickra
 
 Wickra is a multi-language technical-analysis library with a Rust core and
-first-class bindings for **Python, Node.js, and WebAssembly**. Every indicator
+first-class bindings for **Python, Node.js, and WASM**. Every indicator
 is a state machine that updates in **O(1) per new data point**, so live trading
 bots and historical backtests share the exact same implementation — no separate
 "streaming" and "batch" code paths to drift apart.
@@ -23,7 +23,7 @@ catalogue.
   no recomputation over history, the same call whether you feed a 50,000-bar
   backtest or one live tick.
 - **One engine, four languages.** The Rust core compiles to Python wheels, a
-  Node native addon, a WebAssembly bundle, and a crate. Identical numbers
+  Node native addon, a WASM bundle, and a crate. Identical numbers
   everywhere.
 - **Install-free.** `pip install wickra`, `npm install wickra`,
   `cargo add wickra` — no system dependencies, no C toolchain, no build step.

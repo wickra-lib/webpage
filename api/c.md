@@ -16,7 +16,7 @@ cargo build -p wickra-c --release
 
 - **Distribution:** `wickra.h` + `wickra.hpp` + the library ship with every
   [GitHub release](https://github.com/wickra-lib/wickra/releases).
-- **Links against:** C, C++, and any C-capable language (Go, C#, Java, R).
+- **Links against:** C, C++, and any C-capable language (C#, Go, Java, R).
 - **Memory model:** opaque handles, NULL-safe, no panic across the boundary.
 
 ```bash

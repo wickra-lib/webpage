@@ -5,7 +5,7 @@ description: Wickra in R — install the .Call binding, indicator constructors w
 
 # R
 
-The R binding is a `.Call` stecker on the C ABI hub (not extendr). It compiles a
+The R binding is a `.Call` shim on the C ABI hub (not extendr). It compiles a
 thin C glue layer against the prebuilt Wickra C ABI library and exposes all 514
 indicators as constructors.
 

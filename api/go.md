@@ -5,7 +5,7 @@ description: Wickra in Go — go get the cgo binding, idiomatic indicator types 
 
 # Go
 
-The Go binding is a cgo stecker on the C ABI hub. It links the prebuilt Wickra
+The Go binding is a cgo shim on the C ABI hub. It links the prebuilt Wickra
 C ABI library and exposes all 514 indicators as idiomatic Go types.
 
 ```bash

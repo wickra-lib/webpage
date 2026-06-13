@@ -47,6 +47,8 @@ const updated = computed(() => {
       <span class="wk-sep">·</span>
       <a href="/about">About</a>
       <span class="wk-sep">·</span>
+      <a href="/security">Security</a>
+      <span class="wk-sep">·</span>
       <a href="/privacy">Privacy</a>
     </p>
   </footer>

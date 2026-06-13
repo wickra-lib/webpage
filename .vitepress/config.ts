@@ -28,9 +28,9 @@ const structuredData = {
       url: 'https://wickra.org/',
       applicationCategory: 'DeveloperApplication',
       operatingSystem: 'Windows, macOS, Linux, WebAssembly',
-      programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly', 'C', 'C#', 'Go', 'Java', 'R'],
+      programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly', 'C', 'C++', 'C#', 'Go', 'Java', 'R'],
       description:
-        'Streaming-first technical indicators with a Rust core and Python, Node, WASM, C ABI, .NET, Go, Java, and R bindings. Same code for backtesting and live ticks.',
+        'Streaming-first technical indicators. Native Rust, Python, Node.js, WASM + C ABI hub → C, C++, C#, Go, Java, R. Same code for backtesting and live ticks.',
       license: 'https://polyformproject.org/licenses/noncommercial/1.0.0/',
       publisher: { '@id': 'https://wickra.org/#organization' },
     },
@@ -40,7 +40,7 @@ const structuredData = {
 export default defineConfig({
   title: 'Wickra',
   description:
-    'Streaming-first technical indicators with a Rust core and Python, Node, WASM, C ABI, .NET, Go, Java, and R bindings — 514 indicators, install-free. Same code for backtest and live tick.',
+    'Streaming-first technical indicators. Native Rust, Python, Node.js, WASM + C ABI hub → C, C++, C#, Go, Java, R — 514 indicators, install-free. Same code for backtest and live tick.',
   lang: 'en-US',
   cleanUrls: true,
 
@@ -76,7 +76,7 @@ export default defineConfig({
       {
         property: 'og:description',
         content:
-          '514 indicators with a Rust core and Python / Node / WASM / C / C# / Go / Java / R bindings. Same code for backtest and live tick. Install-free.',
+          '514 indicators with a Rust core and Python / Node.js / WASM / C / C++ / C# / Go / Java / R bindings. Same code for backtest and live tick. Install-free.',
       },
     ],
     ['meta', { property: 'og:image', content: 'https://wickra.org/og-banner.webp' }],

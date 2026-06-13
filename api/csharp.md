@@ -1,11 +1,11 @@
 ---
 title: C# API
-description: Wickra in C# / .NET — dotnet add package Wickra, idiomatic IDisposable indicator classes, batch + streaming, and nullable record-struct multi-output over the C ABI.
+description: Wickra in C# — dotnet add package Wickra, idiomatic IDisposable indicator classes, batch + streaming, and nullable record-struct multi-output over the C ABI.
 ---
 
-# C# / .NET
+# C#
 
-The .NET binding is the first language stecker on the C ABI hub. It ships on
+The C# binding is the first language shim on the C ABI hub. It ships on
 NuGet as `Wickra` with the native library prebuilt for every supported platform;
 there is nothing to compile.
 

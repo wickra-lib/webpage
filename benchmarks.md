@@ -137,12 +137,12 @@ bars (median of 3, same machine as above).
 | Target               | streaming (Mupd/s) | batch (Mupd/s) |
 |----------------------|-------------------:|---------------:|
 | Rust core (no FFI)   |                391 |            500 |
-| C                    |                383 |            330 |
-| C# / .NET            |                337 |            244 |
+| C / C++              |                383 |            330 |
+| C#                   |                337 |            244 |
 | Python               |                 33 |            488 |
 | Java                 |                 28 |            175 |
 | Go                   |                 24 |            400 |
-| WebAssembly          |                 19 |            167 |
+| WASM                 |                 19 |            167 |
 | Node.js              |                 17 |             10 |
 | R                    |                0.1 |            193 |
 
@@ -157,7 +157,7 @@ the per-binding `throughput` scripts — see
 ## What the numbers do **not** say
 
 - Absolute µs values depend on CPU, memory clock, OS scheduler, and the
-  Python / Node / Rust versions — read them as **relative speedups** between
+  Python / Node.js / Rust versions — read them as **relative speedups** between
   libraries on identical input, not as a universal performance contract.
 - Reproduced on: Windows 11 Pro 26200, AMD Ryzen 9 9950X, 64 GB DDR5,
   Rust 1.92 (release profile, `lto = "fat"`, `codegen-units = 1`), Python 3.12.
@@ -174,7 +174,7 @@ the per-binding `throughput` scripts — see
   — nightly run on the GitHub-hosted Linux runner, archived as build artefacts.
 - [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md)
   — per-binding throughput benchmarks: raw updates/sec for each language binding
-  (C, C#, Go, Java, Python, R, WASM, plus the Rust core baseline). These measure
+  (C, C++, C#, Go, Java, Python, R, WASM, plus the Rust core baseline). These measure
   each binding's FFI overhead, not the cross-library comparison shown above.
 - [Streaming-vs-Batch (docs)](https://docs.wickra.org/Streaming-vs-Batch)
   — what the equivalence guarantee actually means.

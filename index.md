@@ -6,7 +6,7 @@ titleTemplate: false
 hero:
   name: "Wickra"
   text: "Streaming-first technical indicators."
-  tagline: "514 indicators with a Rust core and Python, Node, WASM, C ABI, .NET, Go, Java, and R bindings. Same code for backtest and live tick. Install-free."
+  tagline: "514 indicators with a Rust core, native Python, Node.js, WASM + C ABI hub → C, C++, C#, Go, Java, R. Same code for backtest and live tick. Install-free."
   image:
     src: /wickra-mark.svg
     alt: Wickra
@@ -200,8 +200,8 @@ straight into an indicator that updates in constant time, so per-tick latency
 stays flat even after a session has run for hours. For **backtesting**, you can
 replay a full history through that very same struct and trust that batch and
 streaming produce identical output — the equivalence is pinned by
-reference-value tests. For **research**, the Rust core and the Python, Node,
-WASM, C, C#, Go, Java and R bindings all share one implementation, so a notebook prototype and a
+reference-value tests. For **research**, the Rust core and the Python, Node.js,
+WASM, C, C++, C#, Go, Java and R bindings all share one implementation, so a notebook prototype and a
 production service compute the exact same numbers.
 
 ## The full indicator catalogue {#catalogue}
