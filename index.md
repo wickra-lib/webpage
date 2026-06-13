@@ -164,6 +164,28 @@ const snippetTabs = [
 
 <InstallTabs :tabs="snippetTabs" />
 
+## Requirements {#requirements}
+
+The minimum supported version per language — prebuilt packages need only the
+runtime; building a binding from source needs the extra toolchain noted below.
+
+| Language    | Package                            | Minimum supported          |
+| ----------- | ---------------------------------- | -------------------------- |
+| **Rust**    | crates.io · `wickra`               | 1.86 (MSRV)                |
+| **Python**  | PyPI · `wickra` (abi3 wheel)       | 3.9 (tested through 3.13)  |
+| **Node.js** | npm · `wickra` (N-API 8)           | 20 (tested on 22 · 24 LTS) |
+| **WASM**    | npm · `wickra-wasm`                | any modern JS engine       |
+| **C**       | `wickra.h` + library               | C99 compiler               |
+| **C++**     | `wickra.hpp` over the C ABI        | C++14 compiler             |
+| **C#**      | NuGet · `Wickra`                   | .NET 8                     |
+| **Go**      | module · `wickra-lib/wickra-go`    | Go 1.23 (cgo)              |
+| **Java**    | Maven Central · `org.wickra:wickra`| Java 22 (FFM / Panama)     |
+| **R**       | source package                     | R ≥ 2.10 (Rtools on Win.)  |
+
+Go (cgo) and R need a C compiler; Java runs with `--enable-native-access`. Full
+detail — runtime vs. build-from-source, per-language notes — is on the
+[Requirements page](https://docs.wickra.org/Requirements) in the docs.
+
 ## Why streaming-first matters {#why}
 
 A batch-only library recomputes its full indicator over every historical bar
