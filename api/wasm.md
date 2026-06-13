@@ -11,7 +11,7 @@ npm install wickra-wasm
 
 The `wickra-wasm` bundle is the same Rust kernel compiled to
 WebAssembly via `wasm-bindgen`. It runs in the browser (any modern
-one), in bundlers (Vite / webpack / esbuild), and in Node 18+.
+one), in bundlers (Vite / webpack / esbuild), and in Node 20+.
 
 - **Latest:** [`wickra-wasm 0.9.0`](https://www.npmjs.com/package/wickra-wasm)
 - **Bundle size:** ~80 KB gzipped (JS loader + `.wasm`)
