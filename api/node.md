@@ -56,13 +56,13 @@ const band = bb.update(price)
 
 ## Live Binance example
 
-`examples/node/live_trading.js` pairs `wickra` with the `ws` package
+`examples/node/live_binance.js` pairs `wickra` with the `ws` package
 for a live Binance Spot kline feed:
 
 ```bash
 cd examples/node
 npm install
-node live_trading.js BTCUSDT 1m
+node live_binance.js BTCUSDT 1m
 ```
 
 ## More
