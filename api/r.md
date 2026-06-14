@@ -5,6 +5,8 @@ description: Wickra in R — install the .Call binding, indicator constructors w
 
 # R
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 The R binding is a `.Call` shim on the C ABI hub (not extendr). It compiles a
 thin C glue layer against the prebuilt Wickra C ABI library and exposes all 514
 indicators as constructors.

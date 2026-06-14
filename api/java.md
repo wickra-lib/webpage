@@ -5,6 +5,8 @@ description: Wickra in Java — org.wickra:wickra on Maven Central, idiomatic Au
 
 # Java
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 The Java binding is a language shim on the C ABI hub built on the Java
 Foreign Function & Memory API (Panama). It ships on Maven Central as
 `org.wickra:wickra` with the native library prebuilt for every supported

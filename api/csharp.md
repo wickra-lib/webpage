@@ -5,6 +5,8 @@ description: Wickra in C# — dotnet add package Wickra, idiomatic IDisposable i
 
 # C#
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 The C# binding is the first language shim on the C ABI hub. It ships on
 NuGet as `Wickra` with the native library prebuilt for every supported platform;
 there is nothing to compile.
