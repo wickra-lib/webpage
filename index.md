@@ -40,6 +40,9 @@ features:
   - icon: 🔄
     title: batch == streaming
     details: Feed prices one by one or hand the whole vector at once — same numeric output, same warmup, same NaN profile. Pinned by tests.
+  - icon: 🌐
+    title: Identical in every language
+    details: All 514 indicators are replayed through all 10 languages (Rust, Python, Node.js, WASM, C, C++, C#, Go, Java, R) and checked bit-for-bit against the Rust reference — golden fixtures, in CI.
   - icon: 📈
     title: Live exchange feed
     details: Optional Binance Spot WebSocket adapter ships with the data crate. Auto-reconnects, applies size limits, and now talks to Testnet via BinanceConfig.
