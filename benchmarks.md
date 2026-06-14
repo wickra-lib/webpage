@@ -54,6 +54,14 @@ and the other Rust crates — wins **and** losses, the same figures the
 Each bar is normalised to the slowest in its group, so the shortest bar is the
 fastest library; the value to the right is the measured number.
 
+::: tip Choosing a language? Jump to per-binding throughput
+All 10 bindings call the same verified Rust core, but the cost of crossing each
+language's FFI boundary differs by orders of magnitude on streaming workloads.
+See [**Per-binding throughput**](#_3-—-per-binding-throughput) to pick the binding
+that keeps up with your hot loop (Rust / C / C++ / C# are near-core; R is the
+outlier).
+:::
+
 ::: tip Reproduce these on your own hardware
 ```bash
 # Python — vs talipp / TA-Lib / tulipy / pandas-ta / finta
