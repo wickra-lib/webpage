@@ -76,7 +76,7 @@ too and are documented per indicator on the
 ## Live trading example
 
 The repo ships a runnable example at
-[`examples/python/live_trading.py`](https://github.com/wickra-lib/wickra/blob/main/examples/python/live_trading.py)
+[`examples/python/live_binance.py`](https://github.com/wickra-lib/wickra/blob/main/examples/python/live_binance.py)
 that pairs `wickra` with the standard `websockets` library to stream a
 Binance Spot kline feed.
 
