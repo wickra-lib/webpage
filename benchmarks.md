@@ -54,6 +54,14 @@ and the other Rust crates — wins **and** losses, the same figures the
 Each bar is normalised to the slowest in its group, so the shortest bar is the
 fastest library; the value to the right is the measured number.
 
+::: tip Choosing a language? Jump to per-binding throughput
+All 10 bindings call the same verified Rust core, but the cost of crossing each
+language's FFI boundary differs by orders of magnitude on streaming workloads.
+See [**Per-binding throughput**](#_3-—-per-binding-throughput) to pick the binding
+that keeps up with your hot loop (Rust / C / C++ / C# are near-core; R is the
+outlier).
+:::
+
 ::: tip Reproduce these on your own hardware
 ```bash
 # Python — vs talipp / TA-Lib / tulipy / pandas-ta / finta
@@ -120,8 +128,8 @@ batch API; `ta-rs` and `yata` are streaming-only:
 <BenchmarkBar :rows="rustBatch" :decimals="0" />
 
 Wickra wins **RSI, Bollinger and ATR** outright and trades a few µs on the simple
-recurrences for the warmup/NaN guarantees. Its real edge is breadth (474
-indicators) and native O(1) streaming across four languages, not winning every
+recurrences for the warmup/NaN guarantees. Its real edge is breadth (514
+indicators) and O(1) streaming across ten languages, not winning every
 micro-benchmark — the
 [project README](https://github.com/wickra-lib/wickra#benchmarks) carries the
 same tables.

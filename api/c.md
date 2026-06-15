@@ -5,6 +5,8 @@ description: Wickra in C / C++ — link the generated wickra.h, the five-functio
 
 # C / C++
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 The C ABI is the hub every other C-capable language links against. It ships as a
 pre-built shared/static library plus a generated header, `wickra.h`.
 

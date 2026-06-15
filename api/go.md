@@ -5,6 +5,8 @@ description: Wickra in Go — go get the cgo binding, idiomatic indicator types 
 
 # Go
 
+> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+
 The Go binding is a cgo shim on the C ABI hub. It links the prebuilt Wickra
 C ABI library and exposes all 514 indicators as idiomatic Go types.
 
