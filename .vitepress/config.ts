@@ -31,7 +31,7 @@ const structuredData = {
       programmingLanguage: ['Rust', 'Python', 'JavaScript', 'WebAssembly', 'C', 'C++', 'C#', 'Go', 'Java', 'R'],
       description:
         'Streaming-first technical indicators. Native Rust, Python, Node.js, WASM + C ABI hub → C, C++, C#, Go, Java, R. Same code for backtesting and live ticks.',
-      license: 'https://polyformproject.org/licenses/noncommercial/1.0.0/',
+      license: 'https://github.com/wickra-lib/wickra#license',
       publisher: { '@id': 'https://wickra.org/#organization' },
     },
   ],
