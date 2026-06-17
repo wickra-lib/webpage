@@ -17,7 +17,7 @@ pre-built wheel for every Python 3.9–3.13 on Linux, macOS, and Windows
 (x86_64 and aarch64 where the registry has the platform). NumPy is an optional
 extra (`pip install wickra[numpy]`) for zero-copy interop.
 
-- **Latest:** [`wickra 0.9.2`](https://pypi.org/project/wickra/)
+- **Latest:** [`wickra 0.9.3`](https://pypi.org/project/wickra/)
 - **Supported Python:** 3.9 / 3.11 / 3.12 / 3.13 (3.10 omitted upstream)
 
 ## Batch — TA-Lib-style over a series
