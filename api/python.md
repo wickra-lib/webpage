@@ -1,6 +1,6 @@
 ---
 title: Python API
-description: Wickra in Python — pip install wickra (zero C deps), NumPy-friendly batch, streaming, and live feeds via the websockets package.
+description: Wickra in Python — pip install wickra with zero third-party deps (not even NumPy), array.array batch, streaming, and a native Binance live feed.
 ---
 
 # Python
@@ -11,22 +11,24 @@ description: Wickra in Python — pip install wickra (zero C deps), NumPy-friend
 pip install wickra
 ```
 
-No system dependencies. No C toolchain. The Rust core ships as a
+**Zero third-party dependencies** — `pip install wickra` pulls nothing else,
+not even NumPy. No system dependencies, no C toolchain. The Rust core ships as a
 pre-built wheel for every Python 3.9–3.13 on Linux, macOS, and Windows
-(x86_64 and aarch64 where the registry has the platform).
+(x86_64 and aarch64 where the registry has the platform). NumPy is an optional
+extra (`pip install wickra[numpy]`) for zero-copy interop.
 
 - **Latest:** [`wickra 0.9.2`](https://pypi.org/project/wickra/)
 - **Supported Python:** 3.9 / 3.11 / 3.12 / 3.13 (3.10 omitted upstream)
 
-## Batch — TA-Lib-style on a NumPy array
+## Batch — TA-Lib-style over a series
 
 ```python
-import numpy as np
-import wickra as ta
+import wickra as ta                     # zero third-party deps — not even NumPy
 
-prices = np.linspace(100, 200, 1000)
+prices = [100.0 + i * 0.1 for i in range(1000)]   # a list, array.array or NumPy all work
 rsi = ta.RSI(14)
-values = rsi.batch(prices)              # numpy array, NaN during warmup
+values = rsi.batch(prices)              # array.array('d'), NaN during warmup
+                                        # np.asarray(values) wraps it zero-copy if you use NumPy
 ```
 
 ## Streaming — tick-by-tick
@@ -79,8 +81,9 @@ too and are documented per indicator on the
 
 The repo ships a runnable example at
 [`examples/python/live_binance.py`](https://github.com/wickra-lib/wickra/blob/main/examples/python/live_binance.py)
-that pairs `wickra` with the standard `websockets` library to stream a
-Binance Spot kline feed.
+that streams a Binance Spot kline feed through the **native** `wickra.BinanceFeed`
+— no third-party WebSocket client. A `wickra.fetch_binance_klines` example pulls
+historical candles over the native REST fetcher the same way.
 
 ## More
 
