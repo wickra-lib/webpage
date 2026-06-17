@@ -144,21 +144,22 @@ bars (median of 3, same machine as above).
 
 | Target               | streaming (Mupd/s) | batch (Mupd/s) |
 |----------------------|-------------------:|---------------:|
-| Rust core (no FFI)   |                391 |            500 |
-| C / C++              |                383 |            330 |
-| C#                   |                337 |            244 |
-| Python               |                 33 |            488 |
-| Java                 |                 28 |            175 |
-| Go                   |                 24 |            400 |
-| WASM                 |                 19 |            167 |
-| Node.js              |                 17 |             10 |
-| R                    |                0.1 |            193 |
+| Rust core (no FFI)   |                380 |            498 |
+| C / C++              |                365 |            358 |
+| C#                   |                348 |            259 |
+| Python               |                 31 |             46 |
+| Java                 |                 38 |            173 |
+| Go                   |                 23 |            394 |
+| WASM                 |                 21 |            169 |
+| Node.js              |                 16 |              9 |
+| R                    |                0.1 |            279 |
 
-Streaming spans three orders of magnitude — the raw C ABI (383) nearly matches
-the FFI-free Rust ceiling (391), while R's per-call interpreter overhead makes
-streaming ~2000× slower than its own batch. The single `batch` crossing
-converges near the core speed for the zero-copy bindings; Node is the outlier
-because its napi `batch` boxes every element into a JS `Array`. Reproduce with
+Streaming spans three orders of magnitude — the raw C ABI (365) sits just under
+the FFI-free Rust ceiling (380), while R's per-call interpreter overhead makes
+streaming ~2800× slower than its own batch. The single `batch` crossing stays
+high for the bindings that return a contiguous buffer; the low outliers are Node
+(its napi `batch` boxes every element into a JS `Array`) and Python (a stdlib
+`array.array` copy, now that NumPy is optional). Reproduce with
 the per-binding `throughput` scripts — see
 [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md).
 
