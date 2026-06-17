@@ -32,8 +32,8 @@ features:
     title: Rust core, five targets
     details: One implementation in Rust. Python (PyO3), Node (napi-rs), browsers (wasm-bindgen) and Rust itself all share it, plus a C ABI any C-capable language links against.
   - icon: 📦
-    title: Install-free
-    details: "pip install wickra works on Windows without a C toolchain. So does npm install wickra. And cargo add wickra. Zero system deps."
+    title: Zero dependencies
+    details: "pip install wickra works on Windows without a C toolchain. So does npm install wickra. And cargo add wickra. Zero system deps — and zero third-party packages, in every language. Not even NumPy."
   - icon: 🧪
     title: 100 % covered
     details: Reference-value tests for every indicator, plus property tests for the streaming invariants. CI runs 28 checks across three OSes.
@@ -44,8 +44,8 @@ features:
     title: Identical in every language
     details: All 514 indicators are replayed through all 10 languages (Rust, Python, Node.js, WASM, C, C++, C#, Go, Java, R) and checked bit-for-bit against the Rust reference — golden fixtures, in CI.
   - icon: 📈
-    title: Live exchange feed
-    details: Optional Binance Spot WebSocket adapter ships with the data crate. Auto-reconnects, applies size limits, and now talks to Testnet via BinanceConfig.
+    title: Native data layer
+    details: "A CSV candle reader, tick-to-candle aggregator, timeframe resampler, live Binance WebSocket feed and historical REST fetcher — native in all 10 languages, pulling zero third-party packages. No pandas, no ws, no jackson."
 ---
 
 <script setup>
