@@ -34,8 +34,7 @@ const badges = [
   { alt: 'NuGet', slug: 'nuget', src: 'https://img.shields.io/nuget/v/Wickra.svg?logo=nuget&color=blue', href: 'https://www.nuget.org/packages/Wickra' },
   { alt: 'Maven Central', slug: 'maven', src: 'https://img.shields.io/maven-central/v/org.wickra/wickra.svg?logo=apachemaven&color=blue', href: 'https://central.sonatype.com/artifact/org.wickra/wickra' },
   { alt: 'Go module', slug: 'go', src: 'https://img.shields.io/github/v/tag/wickra-lib/wickra-go.svg?logo=go&logoColor=white&color=00ADD8&label=go', href: 'https://pkg.go.dev/github.com/wickra-lib/wickra-go' },
-  // Locally generated (no live version source); read from disk, never fetched.
-  { alt: 'r-universe', slug: 'r-universe', local: true, href: 'https://wickra-lib.r-universe.dev' },
+  { alt: 'r-universe', slug: 'r-universe', src: 'https://wickra-lib.r-universe.dev/badges/wickra', href: 'https://wickra-lib.r-universe.dev' },
   { alt: 'License: MIT OR Apache-2.0', slug: 'license', src: 'https://img.shields.io/badge/license-MIT_OR_Apache--2.0-blue', href: 'https://github.com/wickra-lib/wickra#license' },
   { alt: 'OpenSSF Scorecard', slug: 'scorecard', src: 'https://api.securityscorecards.dev/projects/github.com/wickra-lib/wickra/badge', href: 'https://scorecard.dev/viewer/?uri=github.com/wickra-lib/wickra' },
   { alt: 'OpenSSF Best Practices', slug: 'best-practices', src: 'https://www.bestpractices.dev/projects/13094/badge', href: 'https://www.bestpractices.dev/projects/13094' },
@@ -98,22 +97,6 @@ const manifest = []
 let failures = 0
 for (const b of badges) {
   const file = `/badges/${b.slug}.svg`
-  // Locally generated badges (gen-badges.mjs) are never fetched: read the
-  // committed SVG, record its dimensions, and move on.
-  if (b.local) {
-    const path = resolve(outDir, `${b.slug}.svg`)
-    if (existsSync(path)) {
-      const { width, height } = dimsOf(readFileSync(path, 'utf-8'))
-      manifest.push({ alt: b.alt, href: b.href, file, width, height })
-      console.log(`fetch-badges: ${b.slug} (local) ${width}x${height}`)
-    } else {
-      failures++
-      const old = prevByAlt.get(b.alt)
-      if (old) manifest.push(old)
-      console.warn(`fetch-badges: ${b.slug} local file missing (run gen:badges); ${old ? 'kept previous' : 'skipped'}`)
-    }
-    continue
-  }
   try {
     const res = await fetch(b.src, { redirect: 'follow' })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -134,14 +117,14 @@ for (const b of badges) {
     }
     // Version badges must read like a version (e.g. "v0.5.8"); anything else is
     // an upstream error that slipped past the marker list above.
-    if (['release', 'crates', 'pypi', 'npm', 'nuget', 'maven', 'go'].includes(b.slug) && !/^v?\d/.test(valueText)) {
+    if (['release', 'crates', 'pypi', 'npm', 'nuget', 'maven', 'go', 'r-universe'].includes(b.slug) && !/^v?\d/.test(valueText)) {
       throw new Error(`version badge value is not a version: "${valueText}"`)
     }
     // Version badges are monotonic: a value lower than the committed snapshot is
     // a stale badge-host cache, not a real downgrade — reject it so the badge can
     // never move backwards (e.g. shields serving 0.8.4 over a committed 0.8.5).
     const verTarget = resolve(outDir, `${b.slug}.svg`)
-    if (['release', 'crates', 'pypi', 'npm', 'nuget', 'maven', 'go'].includes(b.slug) && existsSync(verTarget)) {
+    if (['release', 'crates', 'pypi', 'npm', 'nuget', 'maven', 'go', 'r-universe'].includes(b.slug) && existsSync(verTarget)) {
       const toTuple = (t) => { const m = String(t).match(/(\d+)\.(\d+)\.(\d+)/); return m ? m.slice(1).map(Number) : null }
       const next = toTuple(valueText)
       const prevText = ((readFileSync(verTarget, 'utf-8').match(/<text[^>]*>([^<]*)<\/text>/g) || []).pop() || '').replace(/<[^>]+>/g, '').trim()
