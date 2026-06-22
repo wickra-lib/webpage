@@ -18,7 +18,7 @@ builds you can depend on `wickra-core` directly and pick features with
 `--no-default-features`.
 
 - **Latest:** [`wickra 0.9.7`](https://crates.io/crates/wickra)
-- **API reference:** <https://docs.rs/wickra>
+- **API reference:** <https://docs.rs/wickra/latest/wickra/>
 - **MSRV:** Rust 1.86 (workspace), 1.88 (Node binding crate)
 
 ## The `Indicator` trait
