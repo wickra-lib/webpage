@@ -9,6 +9,8 @@
 [![License: MIT OR Apache-2.0](https://raw.githubusercontent.com/wickra-lib/.github/main/profile/badges/license.svg)](https://github.com/wickra-lib/wickra#license)
 [![Built with VitePress](https://img.shields.io/badge/built%20with-VitePress-5c73e7?logo=vite&logoColor=white)](https://vitepress.dev)
 
+---
+
 Source for the Wickra landing site (**[wickra.org](https://wickra.org)**): hero,
 live in-browser WASM indicator demo, benchmarks, and per-language API overviews.
 Built with [VitePress](https://vitepress.dev).
