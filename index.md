@@ -229,6 +229,22 @@ reference-value tests. For **research**, the Rust core and the Python, Node.js,
 WASM, C, C++, C#, Go, Java and R bindings all share one implementation, so a notebook prototype and a
 production service compute the exact same numbers.
 
+## The Wickra ecosystem {#ecosystem}
+
+The same data-driven core and ten-language binding surface power a family of
+products — each streaming-first, each byte-identical across every binding.
+
+| Product | What it does |
+|---|---|
+| [**Exchange**](https://exchange.wickra.org) | One trading interface across the ten largest venues — spot, futures, private user-data streams, with paper and replay execution. |
+| [**Backtest**](https://backtest.wickra.org) | Streaming-native, event-driven backtester where a backtest and a live run over the same JSON spec are byte-identical. |
+| [**Terminal**](https://terminal.wickra.org) | A streaming trading terminal with a native TUI and a Web renderer sharing one data-driven core. |
+| [**Screener**](https://screener.wickra.org) | Scan thousands of symbols in parallel against a JSON condition tree over 514 streaming indicators. |
+| [**X-Ray**](https://xray.wickra.org) | A free explorer for market microstructure — footprint, order-book heatmap, liquidation map, funding/OI divergence. |
+| [**Radar**](https://radar.wickra.org) | Real-time derivatives signal scanner over a JSON RadarSpec — OI delta, funding flips, book imbalance, liquidations. |
+| [**Copilot**](https://copilot.wickra.org) | A local market copilot grounded in real order-book, liquidation and funding microstructure — LLM-agnostic, offline-first. |
+| [**Shazam**](https://shazam.wickra.org) | Match an asset's current microstructure fingerprint against its entire history — cosine, Euclidean or DTW similarity. |
+
 ## The full indicator catalogue {#catalogue}
 
 514 indicators across twenty-four families. Every one is implemented once in Rust,
