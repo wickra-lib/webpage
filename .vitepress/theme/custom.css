@@ -437,8 +437,26 @@
   transition: opacity 0.15s ease;
 }
 
-.wk-tabs-panel:hover .wk-tabs-copy {
+.wk-tabs-panel:hover .wk-tabs-copy,
+/* The button is hover-revealed, which leaves it invisible to anyone driving the
+   page from the keyboard; show it while focus is inside the panel too. */
+.wk-tabs-panel:focus-within .wk-tabs-copy {
   opacity: 1;
+}
+
+/* Available to assistive technology, not painted. Used for the copy result,
+   which a screen reader would otherwise never hear. */
+.wk-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 .wk-tabs-copy:hover {
