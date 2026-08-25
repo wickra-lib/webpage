@@ -33,13 +33,13 @@ for (const price of liveFeed) {
 }
 ```
 
-## Batch (returns a `Float64Array`)
+## Batch (one call over a whole series)
 
 ```javascript
 import { EMA } from 'wickra'
 
 const ema = new EMA(20)
-const out = ema.batch(prices)        // Float64Array, NaN during warmup
+const out = ema.batch(prices)        // number[], NaN during warmup
 ```
 
 ## Multi-output indicators
