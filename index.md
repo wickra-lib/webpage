@@ -176,14 +176,14 @@ runtime; building a binding from source needs the extra toolchain noted below.
 | ----------- | ---------------------------------- | -------------------------- |
 | **Rust**    | crates.io · `wickra`               | 1.86 (MSRV)                |
 | **Python**  | PyPI · `wickra` (abi3 wheel)       | 3.9 (tested through 3.13)  |
-| **Node.js** | npm · `wickra` (N-API 8)           | 20 (tested on 22 · 24 LTS) |
+| **Node.js** | npm · `wickra` (N-API 8)           | 22 (tested on 22 · 24 LTS) |
 | **WASM**    | npm · `wickra-wasm`                | any modern JS engine       |
 | **C**       | `wickra.h` + library               | C99 compiler               |
 | **C++**     | `wickra.hpp` over the C ABI        | C++14 compiler             |
 | **C#**      | NuGet · `Wickra`                   | .NET 8                     |
 | **Go**      | module · `wickra-lib/wickra-go`    | Go 1.23 (cgo)              |
 | **Java**    | Maven Central · `org.wickra:wickra`| Java 22 (FFM / Panama)     |
-| **R**       | source package                     | R ≥ 2.10 (Rtools on Win.)  |
+| **R**       | source package                     | R ≥ 4.1 (Rtools on Win.)   |
 
 Go (cgo) and R need a C compiler; Java runs with `--enable-native-access`. Full
 detail — runtime vs. build-from-source, per-language notes — is on the
@@ -231,19 +231,68 @@ production service compute the exact same numbers.
 
 ## The Wickra ecosystem {#ecosystem}
 
-The same data-driven core and ten-language binding surface power a family of
-products — each streaming-first, each byte-identical across every binding.
+Wickra is the core of a family of twenty-three products, one repository each
+under [wickra-lib](https://github.com/wickra-lib). Every one of them is a
+Rust core with a CLI and the same ten-language binding surface as the core —
+released to the same registries from one pipeline, and checked byte-for-byte
+across all ten languages by a golden corpus in every repository. Each product
+installs by its own name (`pip install wickra-<name>`, `npm install
+wickra-<name>`, `cargo install wickra-<name>`, …) and has its own site.
+
+### Data — market data in, market data replayed, market data synthesised
 
 | Product | What it does |
 |---|---|
 | [**Exchange**](https://exchange.wickra.org) | One trading interface across the ten largest venues — spot, futures, private user-data streams, with paper and replay execution. |
+| [**Synth**](https://synth.wickra.org) | Deterministic synthetic market microstructure — OHLCV, order book, trades and funding from a single seed. |
+| [**Time Machine**](https://timemachine.wickra.org) | Scrub the whole market like a video: every symbol, full order book, rewound to any moment by deterministic re-fold. |
+| [**Genome**](https://genome.wickra.org) | A vector database of the whole market — every asset a 514-dimensional live vector, for similarity search, clustering and anomaly detection. |
+| [**Feature Store**](https://feature-store.wickra.org) | OHLCV and microstructure streams into ML-ready feature matrices over the 514 O(1) streaming indicators. |
+
+### Research — backtest, screen, search, train
+
+| Product | What it does |
+|---|---|
 | [**Backtest**](https://backtest.wickra.org) | Streaming-native, event-driven backtester where a backtest and a live run over the same JSON spec are byte-identical. |
-| [**Terminal**](https://terminal.wickra.org) | A streaming trading terminal with a native TUI and a Web renderer sharing one data-driven core. |
 | [**Screener**](https://screener.wickra.org) | Scan thousands of symbols in parallel against a JSON condition tree over 514 streaming indicators. |
+| [**Darwin**](https://darwin.wickra.org) | Evolutionary strategy search at millions of backtests per second, mutating and crossing JSON specs across the 514-indicator space. |
+| [**Gym**](https://gym.wickra.org) | A Gymnasium-compatible, microstructure-aware backtest environment with O(1) steps for deterministic RL rollouts. |
+| [**Impact**](https://impact.wickra.org) | The backtester that knows you would have moved the market — agent-based fills on the real historical L2 order book. |
+
+### Trust — prove, verify, benchmark and gate what a backtest claims
+
+| Product | What it does |
+|---|---|
+| [**Verify**](https://verify.wickra.org) | Confirm or refute a claimed backtest report against its strategy and data, in ten languages. |
+| [**Proof**](https://proof.wickra.org) | Proof-of-Backtest: a deterministic (spec, data) → report + blake3 hash, recomputable byte-for-byte in ten languages. |
+| [**ZK**](https://zk.wickra.org) | Prove a backtest zero-knowledge — on-chain-verifiable performance without revealing the data or the strategy. |
+| [**Strategy-CI**](https://strategy-ci.wickra.org) | Jest for trading strategies: golden-pin the report, catch regressions in CI, property-test against fuzzed data. |
+| [**Benchmark**](https://benchmark.wickra.org) | A reproducible, golden-verified benchmark suite — recompute any (strategy, dataset, report) in ten languages and confirm it byte-for-byte. |
+
+### Surface — what a trader looks at and talks to
+
+| Product | What it does |
+|---|---|
+| [**Terminal**](https://terminal.wickra.org) | A streaming trading terminal with a native TUI and a Web renderer sharing one data-driven core. |
 | [**X-Ray**](https://xray.wickra.org) | A free explorer for market microstructure — footprint, order-book heatmap, liquidation map, funding/OI divergence. |
 | [**Radar**](https://radar.wickra.org) | Real-time derivatives signal scanner over a JSON RadarSpec — OI delta, funding flips, book imbalance, liquidations. |
 | [**Copilot**](https://copilot.wickra.org) | A local market copilot grounded in real order-book, liquidation and funding microstructure — LLM-agnostic, offline-first. |
 | [**Shazam**](https://shazam.wickra.org) | Match an asset's current microstructure fingerprint against its entire history — cosine, Euclidean or DTW similarity. |
+
+### Edge — the core compiled for the browser, the binary, the chip
+
+| Product | What it does |
+|---|---|
+| [**Compile**](https://compile.wickra.org) | Compile a strategy spec into a standalone deployable — a WASM module, a self-contained binary, or a `no_std` artifact. |
+| [**Embed**](https://embed.wickra.org) | Allocation-free, `no_std` streaming indicators for bare-metal and HFT, byte-for-byte identical to the core. |
+| [**Pico**](https://pico.wickra.org) | The O(1) indicator core running bare-metal on a $5 Raspberry Pi Pico — the LED blinks on the EMA cross. |
+
+**Try it without installing anything:** all 514 indicators over a real Binance
+feed at [live.wickra.org](https://live.wickra.org), the backtester compiled
+to WebAssembly at [backtest-live.wickra.org](https://backtest-live.wickra.org),
+and one strategy spec side by side in Python, Rust, JS and Go at
+[playground.wickra.org](https://playground.wickra.org) — zero backend, all of
+them.
 
 ## The full indicator catalogue {#catalogue}
 

@@ -6,7 +6,8 @@ description: What Wickra is, the design choices behind it, and why it exists —
 # About Wickra
 
 Wickra is a multi-language technical-analysis library with a Rust core and
-first-class bindings for **Python, Node.js, and WASM**. Every indicator
+first-class bindings for **Python, Node.js and WASM, plus a C ABI that C, C++,
+C#, Go, Java and R link against**. Every indicator
 is a state machine that updates in **O(1) per new data point**, so live trading
 bots and historical backtests share the exact same implementation — no separate
 "streaming" and "batch" code paths to drift apart.
@@ -14,7 +15,7 @@ bots and historical backtests share the exact same implementation — no separat
 ## What makes it different
 
 Plenty of TA libraries are fast. Wickra's edge is **breadth with reach**: 514
-indicators that all update in O(1) per tick and ship natively to four language
+indicators that all update in O(1) per tick and ship natively to ten language
 targets from a single engine. See the
 [indicators overview](https://docs.wickra.org/Indicators-Overview) for the full
 catalogue.
@@ -40,7 +41,7 @@ The leaner Rust crates win several micro-benchmarks, and those losses are
 [shown rather than hidden](/benchmarks). The gap exists because Wickra keeps its
 guarantees — input validation, a real warmup contract, NaN-safety — instead of
 handing back a bare `f64` from the first tick. What no other library matches is
-the *combination*: catalogue size, native O(1) streaming, NaN-safety, and four
+the *combination*: catalogue size, native O(1) streaming, NaN-safety, and ten
 first-class language targets at once.
 
 ## Why it exists
@@ -52,6 +53,15 @@ already exists and trying to do it differently, and ideally better. It is open
 source because the useful version of that itch is the one other people can build
 on too.
 
+## The family around it
+
+The core is the foundation of twenty-three further products under
+[wickra-lib](https://github.com/wickra-lib) — a backtester, an exchange client,
+a screener, a proof system, a terminal, a `no_std` build for bare metal, and
+more. Each is its own Rust core with the same ten-language binding surface, the
+same release pipeline and the same byte-for-byte golden check; the
+[ecosystem section](/#ecosystem) lists them by layer.
+
 ## Open source
 
 Wickra is dual-licensed under **MIT OR Apache-2.0** — use it, fork it, modify
@@ -61,7 +71,11 @@ it, redistribute it, commercially or not. Issues and pull requests are welcome.
 - **Documentation:** [docs.wickra.org](https://docs.wickra.org)
 - **Packages:** [crates.io](https://crates.io/crates/wickra) ·
   [PyPI](https://pypi.org/project/wickra/) ·
-  [npm](https://www.npmjs.com/package/wickra)
+  [npm](https://www.npmjs.com/package/wickra) ·
+  [NuGet](https://www.nuget.org/packages/Wickra) ·
+  [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) ·
+  [Go module](https://pkg.go.dev/github.com/wickra-lib/wickra-go) ·
+  [r-universe](https://wickra-lib.r-universe.dev)
 
 ## Disclaimer
 
