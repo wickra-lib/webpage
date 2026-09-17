@@ -159,16 +159,62 @@ export default defineConfig({
       {
         text: 'Ecosystem',
         items: [
-          { text: 'Wickra (core)', link: 'https://wickra.org' },
-          { text: 'Docs', link: 'https://docs.wickra.org' },
-          { text: 'Exchange', link: 'https://exchange.wickra.org' },
-          { text: 'Backtest', link: 'https://backtest.wickra.org' },
-          { text: 'Terminal', link: 'https://terminal.wickra.org' },
-          { text: 'Screener', link: 'https://screener.wickra.org' },
-          { text: 'X-Ray', link: 'https://xray.wickra.org' },
-          { text: 'Radar', link: 'https://radar.wickra.org' },
-          { text: 'Copilot', link: 'https://copilot.wickra.org' },
-          { text: 'Shazam', link: 'https://shazam.wickra.org' },
+          {
+            text: 'Core',
+            items: [
+              { text: 'Wickra', link: 'https://wickra.org' },
+              { text: 'Docs', link: 'https://docs.wickra.org' },
+              { text: 'Live demo', link: 'https://live.wickra.org' },
+            ],
+          },
+          {
+            text: 'Data',
+            items: [
+              { text: 'Exchange', link: 'https://exchange.wickra.org' },
+              { text: 'Synth', link: 'https://synth.wickra.org' },
+              { text: 'Time Machine', link: 'https://timemachine.wickra.org' },
+              { text: 'Genome', link: 'https://genome.wickra.org' },
+              { text: 'Feature Store', link: 'https://feature-store.wickra.org' },
+            ],
+          },
+          {
+            text: 'Research',
+            items: [
+              { text: 'Backtest', link: 'https://backtest.wickra.org' },
+              { text: 'Screener', link: 'https://screener.wickra.org' },
+              { text: 'Darwin', link: 'https://darwin.wickra.org' },
+              { text: 'Gym', link: 'https://gym.wickra.org' },
+              { text: 'Impact', link: 'https://impact.wickra.org' },
+            ],
+          },
+          {
+            text: 'Trust',
+            items: [
+              { text: 'Verify', link: 'https://verify.wickra.org' },
+              { text: 'Proof', link: 'https://proof.wickra.org' },
+              { text: 'ZK', link: 'https://zk.wickra.org' },
+              { text: 'Strategy-CI', link: 'https://strategy-ci.wickra.org' },
+              { text: 'Benchmark', link: 'https://benchmark.wickra.org' },
+            ],
+          },
+          {
+            text: 'Surface',
+            items: [
+              { text: 'Terminal', link: 'https://terminal.wickra.org' },
+              { text: 'X-Ray', link: 'https://xray.wickra.org' },
+              { text: 'Radar', link: 'https://radar.wickra.org' },
+              { text: 'Copilot', link: 'https://copilot.wickra.org' },
+              { text: 'Shazam', link: 'https://shazam.wickra.org' },
+            ],
+          },
+          {
+            text: 'Edge',
+            items: [
+              { text: 'Compile', link: 'https://compile.wickra.org' },
+              { text: 'Embed', link: 'https://embed.wickra.org' },
+              { text: 'Pico', link: 'https://pico.wickra.org' },
+            ],
+          },
         ],
       },
       {
