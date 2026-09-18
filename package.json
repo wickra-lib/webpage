@@ -13,7 +13,7 @@
   "dependencies": {
     "lightweight-charts": "^4.2.0",
     "sharp": "^0.35.4",
-    "wickra-wasm": "^1.0.4"
+    "wickra-wasm": "^1.0.5"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
