@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ISeriesMarkersPluginApi } from 'lightweight-charts'
+import { CandlestickSeries, LineSeries, createSeriesMarkers } from 'lightweight-charts'
 import { onMounted, onBeforeUnmount, ref, watch, computed, shallowRef } from 'vue'
 import { useData } from 'vitepress'
 
@@ -179,6 +181,9 @@ const legend = ref<{ label: string; color: string; value: string }[]>([])
 const chartContainer = ref<HTMLDivElement | null>(null)
 const chartRef = shallowRef<any>(null)
 const priceSeriesRef = shallowRef<any>(null)
+// v5 attaches markers as a primitive on the series; the handle is created
+// with the price series and replaced when that series is.
+let priceMarkers: ISeriesMarkersPluginApi<any> | null = null
 const indSeries = new Map<string, any>() // output field -> line series
 const fieldColors = new Map<string, string>() // output field -> colour
 const fieldLast = new Map<string, number>() // output field -> latest value
@@ -304,9 +309,10 @@ function buildPriceSeries() {
   if (priceSeriesRef.value) {
     chart.removeSeries(priceSeriesRef.value)
     priceSeriesRef.value = null
+    priceMarkers = null
   }
   priceSeriesRef.value = candles.value
-    ? chart.addCandlestickSeries({
+    ? chart.addSeries(CandlestickSeries, {
         upColor: '#22c55e',
         downColor: '#ef4444',
         borderVisible: false,
@@ -315,12 +321,13 @@ function buildPriceSeries() {
         priceLineVisible: false,
         lastValueVisible: false,
       })
-    : chart.addLineSeries({
+    : chart.addSeries(LineSeries, {
         color: PRICE_COLOR,
         lineWidth: 2,
         priceLineVisible: false,
         lastValueVisible: false,
       })
+  priceMarkers = createSeriesMarkers(priceSeriesRef.value, [])
 }
 
 function clearIndicatorSeries() {
@@ -331,7 +338,7 @@ function clearIndicatorSeries() {
   fieldLast.clear()
   markers = []
   signalCount = 0
-  if (priceSeriesRef.value) priceSeriesRef.value.setMarkers([])
+  priceMarkers?.setMarkers([])
 }
 
 function seriesFor(field: string, pane: Pane): any {
@@ -339,7 +346,7 @@ function seriesFor(field: string, pane: Pane): any {
   if (s) return s
   const color = PALETTE[indSeries.size % PALETTE.length]
   fieldColors.set(field, color)
-  s = chartRef.value.addLineSeries({
+  s = chartRef.value.addSeries(LineSeries, {
     color,
     lineWidth: 2,
     priceLineVisible: false,
@@ -365,7 +372,7 @@ function pushMarker(time: number, up: boolean) {
     shape: up ? 'arrowUp' : 'arrowDown',
   })
   if (markers.length > 60) markers = markers.slice(-60)
-  priceSeriesRef.value?.setMarkers(markers)
+  priceMarkers?.setMarkers(markers)
 }
 
 /** Numeric output fields of an object result, honouring an optional whitelist. */
@@ -485,7 +492,7 @@ async function rebuild() {
   priceSeriesRef.value.setData(priceBuf)
   for (const [field, data] of fieldBuf) seriesFor(field, p.pane).setData(data)
   markers = markerBuf.slice(-60)
-  if (p.render === 'markers') priceSeriesRef.value.setMarkers(markers)
+  if (p.render === 'markers') priceMarkers?.setMarkers(markers)
   chartRef.value.timeScale().fitContent()
 
   baseTime = n - 1

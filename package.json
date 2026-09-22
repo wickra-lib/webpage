@@ -11,7 +11,7 @@
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "lightweight-charts": "^4.2.0",
+    "lightweight-charts": "^5.2.1",
     "sharp": "^0.35.4",
     "wickra-wasm": "^1.0.5"
   },
