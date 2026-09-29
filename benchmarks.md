@@ -4,43 +4,45 @@ description: Wickra vs. the Python TA ecosystem (finta, talipp) and the other Ru
 ---
 
 <script setup>
-// Full Python batch field, measured in one Python 3.12 run alongside Wickra.
+// Full Python batch field, measured in one Python 3.12 run alongside Wickra's
+// exact batch and its opt-in batch_fast.
 const batch = [
-  { label: 'SMA(20)',           wickra: 22.2,  peers: [{ name: 'TA-Lib', value: 15.6 }, { name: 'tulipy', value: 15.9 }, { name: 'pandas-ta', value: 32.7 },  { name: 'finta', value: 290.1 }]  },
-  { label: 'EMA(20)',           wickra: 30.5,  peers: [{ name: 'TA-Lib', value: 30.4 }, { name: 'tulipy', value: 30.9 }, { name: 'pandas-ta', value: 46.7 },  { name: 'finta', value: 198.5 }]  },
-  { label: 'RSI(14)',           wickra: 52.3,  peers: [{ name: 'TA-Lib', value: 72.0 }, { name: 'tulipy', value: 34.2 }, { name: 'pandas-ta', value: 88.8 },  { name: 'finta', value: 812.3 }]  },
-  { label: 'MACD(12,26,9)',     wickra: 129.8, peers: [{ name: 'TA-Lib', value: 111.1 }, { name: 'tulipy', value: 38.4 }, { name: 'pandas-ta', value: 286.8 }, { name: 'finta', value: 716.7 }]  },
-  { label: 'Bollinger(20,2.0)', wickra: 87.2,  peers: [{ name: 'TA-Lib', value: 74.6 }, { name: 'tulipy', value: 37.9 }, { name: 'pandas-ta', value: 474.3 }, { name: 'finta', value: 1255.5 }] },
-  { label: 'ATR(14)',           wickra: 74.7,  peers: [{ name: 'TA-Lib', value: 87.3 }, { name: 'tulipy', value: 35.5 }, { name: 'pandas-ta', value: null },  { name: 'finta', value: 3496.4 }] },
+  { label: 'SMA(20)',           wickra: 21.7, wickraFast: 10.4, peers: [{ name: 'TA-Lib', value: 15.2 }, { name: 'tulipy', value: 15.8 }, { name: 'pandas-ta', value: 32.6 },  { name: 'finta', value: 269.8 }]  },
+  { label: 'EMA(20)',           wickra: 33.9, wickraFast: 10.6, peers: [{ name: 'TA-Lib', value: 29.2 }, { name: 'tulipy', value: 29.6 }, { name: 'pandas-ta', value: 51.2 },  { name: 'finta', value: 195.4 }]  },
+  { label: 'RSI(14)',           wickra: 36.4, wickraFast: 21.3, peers: [{ name: 'TA-Lib', value: 69.8 }, { name: 'tulipy', value: 35.3 }, { name: 'pandas-ta', value: 107.6 }, { name: 'finta', value: 792.0 }]  },
+  { label: 'MACD(12,26,9)',     wickra: 36.0, wickraFast: 26.1, peers: [{ name: 'TA-Lib', value: 96.1 }, { name: 'tulipy', value: 32.5 }, { name: 'pandas-ta', value: 203.4 }, { name: 'finta', value: 503.1 }]  },
+  { label: 'Bollinger(20,2.0)', wickra: 71.6, wickraFast: 36.4, peers: [{ name: 'TA-Lib', value: 68.4 }, { name: 'tulipy', value: 35.9 }, { name: 'pandas-ta', value: 397.0 }, { name: 'finta', value: 753.5 }]  },
+  { label: 'ATR(14)',           wickra: 49.3, wickraFast: 34.0, peers: [{ name: 'TA-Lib', value: 76.8 }, { name: 'tulipy', value: 30.8 }, { name: 'pandas-ta', value: null },  { name: 'finta', value: 2094.3 }] },
 ]
 
 // Python streaming: Wickra vs talipp, the only other incremental peer. The
 // recompute-on-every-tick libraries (TA-Lib/tulipy/pandas-ta/finta) are
-// 2 800–19 000× slower here — too far off-scale for a bar, covered in prose.
+// 1 600–10 500× slower here — too far off-scale for a bar, covered in prose.
 const streaming = [
-  { label: 'SMA(20)',           wickra: 0.089, unit: 'µs / tick', peers: [{ name: 'talipp', value: 0.959 }] },
-  { label: 'EMA(20)',           wickra: 0.111, unit: 'µs / tick', peers: [{ name: 'talipp', value: 1.187 }] },
-  { label: 'RSI(14)',           wickra: 0.061, unit: 'µs / tick', peers: [{ name: 'talipp', value: 0.949 }] },
-  { label: 'MACD(12,26,9)',     wickra: 0.079, unit: 'µs / tick', peers: [{ name: 'talipp', value: 3.298 }] },
-  { label: 'Bollinger(20,2.0)', wickra: 0.089, unit: 'µs / tick', peers: [{ name: 'talipp', value: 4.967 }] },
+  { label: 'SMA(20)',           wickra: 0.070, unit: 'µs / tick', peers: [{ name: 'talipp', value: 0.537 }] },
+  { label: 'EMA(20)',           wickra: 0.074, unit: 'µs / tick', peers: [{ name: 'talipp', value: 0.849 }] },
+  { label: 'RSI(14)',           wickra: 0.113, unit: 'µs / tick', peers: [{ name: 'talipp', value: 1.327 }] },
+  { label: 'MACD(12,26,9)',     wickra: 0.121, unit: 'µs / tick', peers: [{ name: 'talipp', value: 4.373 }] },
+  { label: 'Bollinger(20,2.0)', wickra: 0.102, unit: 'µs / tick', peers: [{ name: 'talipp', value: 6.746 }] },
 ]
 
-// Rust core vs Rust crates, no language-binding overhead. Per-tick in ns.
+// Rust core vs Rust crates, no language-binding overhead: µs for the whole
+// 50 000-bar series.
 const rustStream = [
-  { label: 'SMA(20)',           wickra: 50,  unit: 'ns', peers: [{ name: 'kand', value: 38 },  { name: 'ta-rs', value: 47 },  { name: 'yata', value: 38 }]   },
-  { label: 'EMA(20)',           wickra: 154, unit: 'ns', peers: [{ name: 'kand', value: 69 },  { name: 'ta-rs', value: 56 },  { name: 'yata', value: 69 }]   },
-  { label: 'RSI(14)',           wickra: 164, unit: 'ns', peers: [{ name: 'kand', value: 216 }, { name: 'ta-rs', value: 74 },  { name: 'yata', value: null }] },
-  { label: 'MACD(12,26,9)',     wickra: 275, unit: 'ns', peers: [{ name: 'kand', value: 143 }, { name: 'ta-rs', value: 66 },  { name: 'yata', value: null }] },
-  { label: 'Bollinger(20,2.0)', wickra: 128, unit: 'ns', peers: [{ name: 'kand', value: 248 }, { name: 'ta-rs', value: 168 }, { name: 'yata', value: null }] },
-  { label: 'ATR(14)',           wickra: 152, unit: 'ns', peers: [{ name: 'kand', value: 166 }, { name: 'ta-rs', value: 61 },  { name: 'yata', value: null }] },
+  { label: 'SMA(20)',           wickra: 51,  peers: [{ name: 'kand', value: 37 },  { name: 'ta-rs', value: 45 },  { name: 'yata', value: 30 }]   },
+  { label: 'EMA(20)',           wickra: 70,  peers: [{ name: 'kand', value: 68 },  { name: 'ta-rs', value: 54 },  { name: 'yata', value: 70 }]   },
+  { label: 'RSI(14)',           wickra: 170, peers: [{ name: 'kand', value: 211 }, { name: 'ta-rs', value: 73 },  { name: 'yata', value: null }] },
+  { label: 'MACD(12,26,9)',     wickra: 226, peers: [{ name: 'kand', value: 165 }, { name: 'ta-rs', value: 62 },  { name: 'yata', value: null }] },
+  { label: 'Bollinger(20,2.0)', wickra: 175, peers: [{ name: 'kand', value: 275 }, { name: 'ta-rs', value: 154 }, { name: 'yata', value: null }] },
+  { label: 'ATR(14)',           wickra: 84,  peers: [{ name: 'kand', value: 156 }, { name: 'ta-rs', value: 62 },  { name: 'yata', value: null }] },
 ]
 const rustBatch = [
-  { label: 'SMA(20)',           wickra: 53,  peers: [{ name: 'kand', value: 41 }]  },
-  { label: 'EMA(20)',           wickra: 111, peers: [{ name: 'kand', value: 71 }]  },
-  { label: 'RSI(14)',           wickra: 221, peers: [{ name: 'kand', value: 259 }] },
-  { label: 'MACD(12,26,9)',     wickra: 533, peers: [{ name: 'kand', value: 327 }] },
-  { label: 'Bollinger(20,2.0)', wickra: 404, peers: [{ name: 'kand', value: 460 }] },
-  { label: 'ATR(14)',           wickra: 122, peers: [{ name: 'kand', value: 169 }] },
+  { label: 'SMA(20)',           wickra: 47,  wickraFast: 21, peers: [{ name: 'kand', value: 39 }]  },
+  { label: 'EMA(20)',           wickra: 75,  wickraFast: 16, peers: [{ name: 'kand', value: 67 }]  },
+  { label: 'RSI(14)',           wickra: 90,  wickraFast: 46, peers: [{ name: 'kand', value: 221 }] },
+  { label: 'MACD(12,26,9)',     wickra: 82,  wickraFast: 58, peers: [{ name: 'kand', value: 228 }] },
+  { label: 'Bollinger(20,2.0)', wickra: 194, wickraFast: 93, peers: [{ name: 'kand', value: 346 }] },
+  { label: 'ATR(14)',           wickra: 71,  wickraFast: 38, peers: [{ name: 'kand', value: 157 }] },
 ]
 </script>
 
@@ -58,8 +60,8 @@ fastest library; the value to the right is the measured number.
 All 10 bindings call the same verified Rust core, but the cost of crossing each
 language's FFI boundary differs by orders of magnitude on streaming workloads.
 See [**Per-binding throughput**](#_3-—-per-binding-throughput) to pick the binding
-that keeps up with your hot loop (Rust / C / C++ / C# are near-core; R is the
-outlier).
+that keeps up with your hot loop (Rust / C / C++ stream near the core; C#, Go and
+Java batch at the core's rate into a reused buffer; R is the streaming outlier).
 :::
 
 ::: tip Reproduce these on your own hardware
@@ -85,52 +87,55 @@ incremental API and must recompute the whole history on every tick. Only
 `talipp` (Python) and `ta-rs` / `yata` (Rust) carry real per-tick state. This is
 the gap the library was built to expose.
 
-**Python — per-tick latency** (seed 5 000 bars, then feed ticks one at a time):
+**Python — per-tick latency** (seed 5 000 bars, then feed 10 000 ticks one at a time):
 
 <BenchmarkBar :rows="streaming" />
 
-Against the only other incremental Python peer Wickra is **11–56× faster**;
-against the recompute-on-every-tick libraries it is **2 800–19 000× faster**
-(`finta` RSI hits 19 000×). tulipy / pandas-ta land in the same recompute band
-as TA-Lib — too far off-scale to chart next to a sub-microsecond bar.
+Against the only other incremental Python peer Wickra is **8–66× faster**;
+against the recompute-on-every-tick libraries it is **1 600–10 500× faster**
+(`finta` Bollinger hits 10 500×). tulipy / pandas-ta land in the same recompute
+band as TA-Lib — too far off-scale to chart next to a sub-microsecond bar.
 
-**Rust — per-tick latency** (whole 50 000-bar series, lower = faster):
+**Rust — per-tick latency** (whole 50 000-bar series, µs, lower = faster):
 
 <BenchmarkBar :rows="rustStream" :decimals="0" />
 
 `ta-rs` hands back a bare `f64` from the first tick with no warmup and no
-validation; it leads several rows by giving those guarantees up. Against `kand`,
-Wickra wins streaming **RSI, Bollinger and ATR**. `yata` exposes only SMA/EMA as
-raw-value methods, so its other rows are omitted rather than faked.
+validation; it leads the table by giving those guarantees up. Against `kand`,
+Wickra wins streaming **RSI, Bollinger and ATR** and ties EMA. `yata` exposes
+only SMA/EMA as raw-value methods, so its other rows are omitted rather than
+faked.
 
-## 2. Batch — competitive, not the headline
+## 2. Batch — the exact batch, and the opt-in fast one
 
-Whole series in one call. This is **not** the headline: hand-tuned C (`tulipy`,
-TA-Lib) and the leanest crate (`kand`) win the simple recurrences, and we show
-the full field rather than cherry-pick. Wickra trades a few µs per pass for the
-`None`-warmup, NaN-safety and bit-exact `batch == streaming` guarantees none of
-them keep — yet it still beats `pandas-ta` and `finta` on every row, and TA-Lib
-on RSI and ATR.
+Whole series in one call, in two forms. **Wickra**'s `batch` is bit for bit what
+streaming gives — a guarantee none of the other libraries keep. **Wickra fast**
+is the opt-in `batch_fast`: SIMD kernels that reorder the arithmetic and agree
+with `batch` to within a few units in the last place, with the same `NaN`
+placement and the same result on every platform. We show the full field rather
+than cherry-pick.
 
 **Python** (20 000-bar pass, µs/op, lower = faster):
 
 <BenchmarkBar :rows="batch" :decimals="1" />
 
 > All five libraries are measured in the **same Python 3.12 run** as Wickra (no
-> CI-vs-desktop mix). tulipy's SIMD C and TA-Lib lead the simple recurrences;
-> `pandas-ta` and `finta` trail across the board. talipp is excluded from the
+> CI-vs-desktop mix). The fast batch leads TA-Lib and tulipy on SMA, EMA, RSI and
+> MACD; tulipy's SIMD C edges it on Bollinger and ATR; the exact batch beats
+> TA-Lib on RSI, MACD and ATR, and `pandas-ta` and `finta` trail across the board. talipp is excluded from the
 > batch chart on purpose — it is streaming-first, so re-instantiating it for a
 > full batch pass is not a like-for-like comparison.
 
-**Rust** (50 000-bar pass, µs, lower = faster). Only Wickra and `kand` expose a
-batch API; `ta-rs` and `yata` are streaming-only:
+**Rust** (50 000-bar pass, µs, lower = faster, into a caller buffer on both
+sides). Only Wickra and `kand` expose a batch API; `ta-rs` and `yata` are
+streaming-only:
 
 <BenchmarkBar :rows="rustBatch" :decimals="0" />
 
-Wickra wins **RSI, Bollinger and ATR** outright and trades a few µs on the simple
-recurrences for the warmup/NaN guarantees. Its real edge is breadth (514
-indicators) and O(1) streaming across ten languages, not winning every
-micro-benchmark — the
+The fast batch wins **every row**; the exact batch wins **RSI, MACD, Bollinger
+and ATR** and trails `kand` by a few µs on SMA and EMA, where keeping
+streaming's bits fixes the order of the additions. Beyond the numbers, the edge
+is breadth (514 indicators) and O(1) streaming across ten languages — the
 [project README](https://github.com/wickra-lib/wickra#benchmarks) carries the
 same tables.
 
@@ -140,27 +145,28 @@ The sections above compare Wickra against other libraries — which only exist f
 Python and Rust. Every binding calls the **same** Rust core, so this last table
 is **not** a speed claim: it measures the raw cost of crossing each language's
 FFI boundary, in million updates per second (Mupd/s), for `SMA(20)` over 200 000
-bars (median of 3, same machine as above).
+bars (the better of two runs, each the median of 3, same machine and session).
 
-| Target               | streaming (Mupd/s) | batch (Mupd/s) |
-|----------------------|-------------------:|---------------:|
-| Rust core (no FFI)   |                380 |            498 |
-| C / C++              |                365 |            358 |
-| C#                   |                348 |            259 |
-| Python               |                 31 |             46 |
-| Java                 |                 38 |            173 |
-| Go                   |                 23 |            394 |
-| WASM                 |                 21 |            169 |
-| Node.js              |                 16 |              9 |
-| R                    |                0.1 |            279 |
+| Target               | streaming | batch | fast batch | fast into a reused buffer |
+|----------------------|----------:|------:|-----------:|--------------------------:|
+| Rust core (no FFI)   |     1 374 | 1 151 |      3 115 |                     3 115 |
+| C / C++              |       399 | 1 126 |      3 160 |                     3 160 |
+| C#                   |        63 |   744 |      1 409 |                     3 145 |
+| Go                   |        24 | 1 046 |      2 435 |                     3 005 |
+| Java                 |        64 |   314 |        367 |                     2 744 |
+| R                    |       0.1 |   601 |      1 021 |                         — |
+| WASM                 |        34 |   424 |        406 |                         — |
+| Python               |        29 |   248 |        314 |                         — |
+| Node.js              |       5.4 |    11 |      1 255 |                         — |
 
-Streaming spans three orders of magnitude — the raw C ABI (365) sits just under
-the FFI-free Rust ceiling (380), while R's per-call interpreter overhead makes
-streaming ~2800× slower than its own batch. The single `batch` crossing stays
-high for the bindings that return a contiguous buffer; the low outliers are Node
-(its napi `batch` boxes every element into a JS `Array`) and Python (a stdlib
-`array.array` copy, now that NumPy is optional). Reproduce with
-the per-binding `throughput` scripts — see
+Streaming spans four orders of magnitude — the raw C ABI is nearly free, while
+R's per-call interpreter overhead makes streaming thousands of times slower than
+its own batch. The single `batch` crossing stays high for the bindings that
+return a contiguous buffer; Node's `batch` still boxes every element into a JS
+`Array`, while its `batchFast` returns a `Float64Array`. Writing into a buffer the
+caller reuses — C#'s `Span`, Go's `BatchFastInto`, Java's native `MemorySegment`,
+the C ABI itself — reaches the Rust ceiling. Reproduce with the per-binding
+`throughput` scripts — see
 [BENCHMARKS.md §3](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md).
 
 ## What the numbers do **not** say

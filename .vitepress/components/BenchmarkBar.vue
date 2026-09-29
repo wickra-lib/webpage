@@ -9,6 +9,8 @@ interface BenchEntry {
 interface BenchRow {
   label: string
   wickra: number
+  /** Wickra's opt-in `batch_fast`, drawn as a second Wickra bar when present. */
+  wickraFast?: number
   /** Every competitor in the row; each renders its own bar. */
   peers: BenchEntry[]
   unit?: string
@@ -38,6 +40,7 @@ const lowerBetter = computed(() => props.lowerIsBetter ?? true)
 function entries(row: BenchRow): (BenchEntry & { self: boolean })[] {
   const all = [
     { name: 'Wickra', value: row.wickra, self: true },
+    ...(row.wickraFast != null ? [{ name: 'Wickra fast', value: row.wickraFast, self: true }] : []),
     ...row.peers.map((p) => ({ ...p, self: false })),
   ]
   return all.sort((a, b) => {
@@ -48,7 +51,7 @@ function entries(row: BenchRow): (BenchEntry & { self: boolean })[] {
 }
 
 function rowMax(row: BenchRow): number {
-  return Math.max(row.wickra, ...row.peers.map((p) => p.value ?? 0))
+  return Math.max(row.wickra, row.wickraFast ?? 0, ...row.peers.map((p) => p.value ?? 0))
 }
 
 function widthFor(value: number | null, row: BenchRow): string {
