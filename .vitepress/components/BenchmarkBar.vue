@@ -62,12 +62,16 @@ function widthFor(value: number | null, row: BenchRow): string {
   return `${Math.max(2, Math.min(100, pct))}%`
 }
 
-// Speedup of the slowest-vs-Wickra, shown once per row as a headline.
+// Speedup of the slowest peer against Wickra's better form, shown once per row as
+// a headline.
 function rowSpeedup(row: BenchRow): string {
   const peerVals = row.peers.map((p) => p.value).filter((v): v is number => v != null)
   if (!peerVals.length || row.wickra === 0) return ''
   const slowest = Math.max(...peerVals)
-  const ratio = lowerBetter.value ? slowest / row.wickra : row.wickra / slowest
+  const own = row.wickraFast == null
+    ? row.wickra
+    : lowerBetter.value ? Math.min(row.wickra, row.wickraFast) : Math.max(row.wickra, row.wickraFast)
+  const ratio = lowerBetter.value ? slowest / own : own / slowest
   if (!isFinite(ratio) || ratio <= 1.01) return ''
   return ratio >= 100 ? `up to ${Math.round(ratio)}×` : `up to ${ratio.toFixed(1)}×`
 }
