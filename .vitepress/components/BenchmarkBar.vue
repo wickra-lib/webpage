@@ -9,6 +9,8 @@ interface BenchEntry {
 interface BenchRow {
   label: string
   wickra: number
+  /** Wickra's opt-in `batch_fast`, drawn as a second Wickra bar when present. */
+  wickraFast?: number
   /** Every competitor in the row; each renders its own bar. */
   peers: BenchEntry[]
   unit?: string
@@ -38,6 +40,7 @@ const lowerBetter = computed(() => props.lowerIsBetter ?? true)
 function entries(row: BenchRow): (BenchEntry & { self: boolean })[] {
   const all = [
     { name: 'Wickra', value: row.wickra, self: true },
+    ...(row.wickraFast != null ? [{ name: 'Wickra fast', value: row.wickraFast, self: true }] : []),
     ...row.peers.map((p) => ({ ...p, self: false })),
   ]
   return all.sort((a, b) => {
@@ -48,7 +51,7 @@ function entries(row: BenchRow): (BenchEntry & { self: boolean })[] {
 }
 
 function rowMax(row: BenchRow): number {
-  return Math.max(row.wickra, ...row.peers.map((p) => p.value ?? 0))
+  return Math.max(row.wickra, row.wickraFast ?? 0, ...row.peers.map((p) => p.value ?? 0))
 }
 
 function widthFor(value: number | null, row: BenchRow): string {
@@ -59,12 +62,16 @@ function widthFor(value: number | null, row: BenchRow): string {
   return `${Math.max(2, Math.min(100, pct))}%`
 }
 
-// Speedup of the slowest-vs-Wickra, shown once per row as a headline.
+// Speedup of the slowest peer against Wickra's better form, shown once per row as
+// a headline.
 function rowSpeedup(row: BenchRow): string {
   const peerVals = row.peers.map((p) => p.value).filter((v): v is number => v != null)
   if (!peerVals.length || row.wickra === 0) return ''
   const slowest = Math.max(...peerVals)
-  const ratio = lowerBetter.value ? slowest / row.wickra : row.wickra / slowest
+  const own = row.wickraFast == null
+    ? row.wickra
+    : lowerBetter.value ? Math.min(row.wickra, row.wickraFast) : Math.max(row.wickra, row.wickraFast)
+  const ratio = lowerBetter.value ? slowest / own : own / slowest
   if (!isFinite(ratio) || ratio <= 1.01) return ''
   return ratio >= 100 ? `up to ${Math.round(ratio)}×` : `up to ${ratio.toFixed(1)}×`
 }
