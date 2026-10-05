@@ -88,7 +88,7 @@ const PICKS: Pick[] = [
 
   { fam: 'DeMark', cls: 'TDDeMarker', label: 'TD DeMarker', params: [['period', 13]], sig: 'hl', pane: 'sub', render: 'line' },
   { fam: 'DeMark', cls: 'TDSetup', label: 'TD Setup', params: [['lookback', 4], ['target', 9]], sig: 'hlc', pane: 'sub', render: 'line' },
-  { fam: 'DeMark', cls: 'TDREI', label: 'TD Range Expansion Index', params: [['period', 5]], sig: 'hl', pane: 'sub', render: 'line' },
+  { fam: 'DeMark', cls: 'TDREI', label: 'TD Range Expansion Index', params: [['period', 5]], sig: 'hlc', pane: 'sub', render: 'line' },
 
   { fam: 'Ichimoku & Charts', cls: 'Ichimoku', label: 'Ichimoku Cloud', params: [['tenkan_period', 9], ['kijun_period', 26], ['senkou_b_period', 52], ['displacement', 26]], sig: 'hlc', pane: 'price', render: 'multi' },
   { fam: 'Ichimoku & Charts', cls: 'HeikinAshi', label: 'Heikin-Ashi (close)', params: [], sig: 'ohlc', pane: 'price', render: 'multi', fields: ['close'] },
