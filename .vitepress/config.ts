@@ -152,7 +152,7 @@ export default defineConfig({
           { text: 'npm', link: 'https://www.npmjs.com/package/wickra' },
           { text: 'NuGet', link: 'https://www.nuget.org/packages/Wickra' },
           { text: 'Maven Central', link: 'https://central.sonatype.com/artifact/org.wickra/wickra' },
-          { text: 'Go module', link: 'https://pkg.go.dev/github.com/wickra-lib/wickra-go' },
+          { text: 'Go module', link: 'https://pkg.go.dev/github.com/wickra-lib/wickra-go/v2' },
           { text: 'r-universe', link: 'https://wickra-lib.r-universe.dev' },
         ],
       },

@@ -56,7 +56,7 @@ const installTabs = [
   { label: 'WASM',   lang: 'bash', code: 'npm install wickra-wasm' },
   { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
   { label: 'C#',     lang: 'bash', code: 'dotnet add package Wickra' },
-  { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra-go' },
+  { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra-go/v2' },
   { label: 'Java',   lang: 'xml',  code: '<!-- Maven Central -->\n<dependency>\n  <groupId>org.wickra</groupId>\n  <artifactId>wickra</artifactId>\n  <version>1.0.7</version>\n</dependency>' },
   { label: 'R',      lang: 'bash', code: 'install.packages("wickra", repos = "https://wickra-lib.r-universe.dev")' },
 ]
@@ -115,7 +115,7 @@ foreach (var price in feed)
         Console.WriteLine($"overbought {v:F2}");
 }`
 
-const goCode = `import wickra "github.com/wickra-lib/wickra-go"
+const goCode = `import wickra "github.com/wickra-lib/wickra-go/v2"
 
 rsi, _ := wickra.NewRsi(14)
 defer rsi.Close()
@@ -181,7 +181,7 @@ runtime; building a binding from source needs the extra toolchain noted below.
 | **C**       | `wickra.h` + library               | C99 compiler               |
 | **C++**     | `wickra.hpp` over the C ABI        | C++14 compiler             |
 | **C#**      | NuGet · `Wickra`                   | .NET 8                     |
-| **Go**      | module · `wickra-lib/wickra-go`    | Go 1.23 (cgo)              |
+| **Go**      | module · `wickra-lib/wickra-go/v2` | Go 1.23 (cgo)              |
 | **Java**    | Maven Central · `org.wickra:wickra`| Java 22 (FFM / Panama)     |
 | **R**       | source package                     | R ≥ 4.1 (Rtools on Win.)   |
 
