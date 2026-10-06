@@ -74,7 +74,7 @@ it, redistribute it, commercially or not. Issues and pull requests are welcome.
   [npm](https://www.npmjs.com/package/wickra) ·
   [NuGet](https://www.nuget.org/packages/Wickra) ·
   [Maven Central](https://central.sonatype.com/artifact/org.wickra/wickra) ·
-  [Go module](https://pkg.go.dev/github.com/wickra-lib/wickra-go) ·
+  [Go module](https://pkg.go.dev/github.com/wickra-lib/wickra-go/v2) ·
   [r-universe](https://wickra-lib.r-universe.dev)
 
 ## Disclaimer
