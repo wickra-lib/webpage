@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "lightweight-charts": "^5.2.1",
-    "sharp": "^0.35.4",
+    "sharp": "^0.35.5",
     "wickra-wasm": "^2.0.0"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "vue": "^3.5.43"
   },
   "overrides": {
-    "vite": "^6.4.3",
+    "vite": "^6.4.5",
     "esbuild": "^0.25.0",
     "uuid": "^11.1.1"
   }
