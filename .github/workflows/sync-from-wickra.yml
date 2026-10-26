@@ -1,19 +1,25 @@
 name: Sync from wickra
 
-# Two values here are decided in wickra-lib/wickra: the indicator count and the
-# released version. Both used to arrive by push -- that repository's
-# sync-about.yml cloned this one with a personal access token and committed
-# them. The token carried write access to four repositories, administration
-# rights on wickra and admin:org, and existed for no other reason.
+# Two kinds of value here are decided elsewhere: the indicator counts and
+# wickra's released version. Both used to arrive by push -- wickra's
+# sync-about.yml cloned this repository with a personal access token and
+# committed them. The token carried write access to four repositories,
+# administration rights on wickra and admin:org, and existed for no other
+# reason.
 #
-# This pulls instead. A schedule is also the only trigger that can work: both
-# values change in the OTHER repository, so a push here is not the event that
-# makes this page wrong. The count moves a few times a week and the version
-# less often; an hour of delay costs nothing.
+# This pulls instead. A schedule is also the only trigger that can work: the
+# values change in the OTHER repositories, so a push here is not the event that
+# makes this page wrong. The counts move a few times a week and the version less
+# often; an hour of delay costs nothing.
 #
-# The -site repositories run the same idea as a read-only check that fails when
-# the numbers disagree. This one patches, because the push model it replaces
-# existed precisely so these values would not have to be raised by hand.
+# The counts are set by the org's one rule set, wickra-lib/.github's
+# scripts/sync-counts.mjs, checked out at a pinned commit. It reads them at the
+# latest releases -- this page describes what can be installed, not what is
+# merged -- and sets every count the site states by the rule that applies: the
+# core's for the catalogue and the demo, the backtest registry's where a page
+# describes a product that resolves through it (the Screener, Feature Store,
+# Genome and Darwin rows). A sed over three files used to catch one phrasing and
+# miss the API pages, the benchmarks, the demo page and every other wording.
 on:
   schedule:
     - cron: "43 * * * *" # hourly at :43, clear of refresh-badges at :17
@@ -24,7 +30,7 @@ permissions:
 
 jobs:
   sync:
-    name: Pull the count and the released version
+    name: Pull the counts and the released version
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -34,29 +40,29 @@ jobs:
         with:
           persist-credentials: false
 
-      # Same derivation the source repository uses: parse the re-export block,
-      # drop the FAMILIES constant and the *Output companion structs, count what
-      # is left. Reading the source rather than a published number keeps this
-      # page from restating a figure nobody checked.
-      - name: Read the count from wickra
-        id: count
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+
+      # One file, read-only, at a pinned commit. It lands beside the site and is
+      # excluded from git, so the commit below cannot pick it up.
+      - name: Check out the count rules
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: wickra-lib/.github
+          ref: d683af6320d14973d311968842600b332b7d3e79
+          path: .wickra-org
+          sparse-checkout: scripts/sync-counts.mjs
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - name: Set the indicator counts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          src=$(curl -fsSL --retry 5 --retry-all-errors \
-            https://raw.githubusercontent.com/wickra-lib/wickra/main/crates/wickra-core/src/lib.rs)
-          n=$(printf '%s' "$src" \
-            | sed -n '/^pub use indicators::{/,/^};/p' \
-            | tr ',{}' '\n' \
-            | sed 's/[[:space:]]//g' \
-            | grep -E '^[A-Z][A-Za-z0-9_]*$' \
-            | grep -vE '^FAMILIES$|Output$' \
-            | sort -u | wc -l)
-          if [ "$n" -lt 100 ]; then
-            echo "::error::parsed only ${n} indicators -- the re-export block moved or the fetch was truncated; refusing to write a wrong number"
-            exit 1
-          fi
-          echo "count=$n" >> "$GITHUB_OUTPUT"
-          echo "wickra exports ${n} indicators"
+          echo ".wickra-org/" >> .git/info/exclude
+          node .wickra-org/scripts/sync-counts.mjs --repo webpage
 
       # The released version, not the one on main: between a bump merging and its
       # tag being pushed, Cargo.toml is ahead of anything a reader can install.
@@ -75,14 +81,11 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "wickra's latest release is ${version}"
 
-      - name: Apply both
+      - name: Apply the version
         env:
-          N: ${{ steps.count.outputs.count }}
           V: ${{ steps.version.outputs.version }}
         run: |
           set -euo pipefail
-          sed -i -E "s/[0-9]+ (streaming-first )?indicators/${N} \1indicators/g" \
-            index.md about.md .vitepress/config.ts
           sed -i -E "s/(Latest:\*\* \[.wickra(-wasm)? )[0-9]+\.[0-9]+\.[0-9]+/\1${V}/" api/*.md
           sed -i -E "s/(text: .v)[0-9]+\.[0-9]+\.[0-9]+/\1${V}/" .vitepress/config.ts
           sed -i -E "s|<version>[0-9]+\.[0-9]+\.[0-9]+</version>|<version>${V}</version>|" api/java.md index.md
@@ -91,10 +94,6 @@ jobs:
       # The demo's bundle follows the same release. npm rewrites package.json and
       # the lockfile together; a sed on package.json alone would leave `npm ci`
       # refusing the mismatch on the next deploy.
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: '22'
-
       - name: Follow the release in the demo bundle
         env:
           V: ${{ steps.version.outputs.version }}
@@ -111,12 +110,11 @@ jobs:
       - name: Commit if changed
         id: commitcheck
         env:
-          N: ${{ steps.count.outputs.count }}
           V: ${{ steps.version.outputs.version }}
         run: |
           set -euo pipefail
           if [ -z "$(git status --porcelain)" ]; then
-            echo "already at ${N} indicators and version ${V}; nothing to commit"
+            echo "counts current and version ${V}; nothing to commit"
             echo "commit=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -127,5 +125,5 @@ jobs:
         uses: wickra-lib/.github/actions/signed-commit@da1bd395c27f33dbed632c8e4e48e12f85394858 # v1.1.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          message: "chore: sync indicator count to ${{ steps.count.outputs.count }} and version to ${{ steps.version.outputs.version }}"
-          paths: index.md about.md .vitepress/config.ts api package.json package-lock.json
+          message: "chore: sync the indicator counts and the released version (${{ steps.version.outputs.version }})"
+          paths: .

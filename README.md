@@ -34,12 +34,17 @@ bundle from npm, so it runs the real indicators in the browser.
 
 ## What is kept current by workflow
 
-- **The indicator count and the released version** — the headline count, the
-  version menu in the nav, the `Latest:` lines and Maven snippets on the API
-  pages, and the demo's `wickra-wasm` bundle (package.json and the lockfile
-  together) — are pulled hourly from [wickra](https://github.com/wickra-lib/wickra)
-  by `sync-from-wickra.yml`: the count from the core's re-export block, the
-  version from its latest release.
+- **The indicator counts and the released version** — every count the site
+  states (the core's, and the backtest registry's where a page describes the
+  products that resolve through it), the version menu in the nav, the `Latest:`
+  lines and Maven snippets on the API pages, and the demo's `wickra-wasm` bundle
+  (package.json and the lockfile together) — are pulled hourly by
+  `sync-from-wickra.yml`, from the latest releases of
+  [wickra](https://github.com/wickra-lib/wickra) and
+  [wickra-backtest](https://github.com/wickra-lib/wickra-backtest). The counts
+  are set by the org's one rule set,
+  [`scripts/sync-counts.mjs`](https://github.com/wickra-lib/.github/blob/main/scripts/sync-counts.mjs)
+  in wickra-lib/.github.
 - **The status badges** in the footer are snapshots refreshed hourly by
   `refresh-badges.yml`; the SVGs in `public/badges/` are generated, not edited.
 

@@ -246,16 +246,16 @@ wickra-<name>`, `cargo install wickra-<name>`, …) and has its own site.
 | [**Exchange**](https://exchange.wickra.org) | One trading interface across the ten largest venues — spot, futures, private user-data streams, with paper and replay execution. |
 | [**Synth**](https://synth.wickra.org) | Deterministic synthetic market microstructure — OHLCV, order book, trades and funding from a single seed. |
 | [**Time Machine**](https://timemachine.wickra.org) | Scrub the whole market like a video: every symbol, full order book, rewound to any moment by deterministic re-fold. |
-| [**Genome**](https://genome.wickra.org) | A vector database of the whole market — every asset a 514-dimensional live vector, for similarity search, clustering and anomaly detection. |
-| [**Feature Store**](https://feature-store.wickra.org) | OHLCV and microstructure streams into ML-ready feature matrices over the 514 O(1) streaming indicators. |
+| [**Genome**](https://genome.wickra.org) | A vector database of the whole market — every asset a 495-dimensional live vector, for similarity search, clustering and anomaly detection. |
+| [**Feature Store**](https://feature-store.wickra.org) | OHLCV and microstructure streams into ML-ready feature matrices over the 495 O(1) streaming indicators. |
 
 ### Research — backtest, screen, search, train
 
 | Product | What it does |
 |---|---|
 | [**Backtest**](https://backtest.wickra.org) | Streaming-native, event-driven backtester where a backtest and a live run over the same JSON spec are byte-identical. |
-| [**Screener**](https://screener.wickra.org) | Scan thousands of symbols in parallel against a JSON condition tree over 514 streaming indicators. |
-| [**Darwin**](https://darwin.wickra.org) | Evolutionary strategy search at millions of backtests per second, mutating and crossing JSON specs across the 514-indicator space. |
+| [**Screener**](https://screener.wickra.org) | Scan thousands of symbols in parallel against a JSON condition tree over 495 streaming indicators. |
+| [**Darwin**](https://darwin.wickra.org) | Evolutionary strategy search at millions of backtests per second, mutating and crossing JSON specs across the 495-indicator space. |
 | [**Gym**](https://gym.wickra.org) | A Gymnasium-compatible, microstructure-aware backtest environment with O(1) steps for deterministic RL rollouts. |
 | [**Impact**](https://impact.wickra.org) | The backtester that knows you would have moved the market — agent-based fills on the real historical L2 order book. |
 
