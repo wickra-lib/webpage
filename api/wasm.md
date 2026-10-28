@@ -5,7 +5,7 @@ description: Wickra in the browser — wickra-wasm runs the same Rust kernel eve
 
 # WASM (browser, bundler, Node)
 
-> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+> **Verified against the Rust reference.** Every one of Wickra's 515 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
 
 ```bash
 npm install wickra-wasm
@@ -15,7 +15,7 @@ The `wickra-wasm` bundle is the same Rust kernel compiled to
 WebAssembly via `wasm-bindgen`. It runs in the browser (any modern
 one), in bundlers (Vite / webpack / esbuild), and in Node 22+.
 
-- **Latest:** [`wickra-wasm 2.0.0`](https://www.npmjs.com/package/wickra-wasm)
+- **Latest:** [`wickra-wasm 2.1.1`](https://www.npmjs.com/package/wickra-wasm)
 - **Bundle size:** ~80 KB gzipped (JS loader + `.wasm`)
 - **Try it live:** [Demo page](/demo)
 

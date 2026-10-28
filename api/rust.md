@@ -5,7 +5,7 @@ description: Wickra in Rust — cargo add wickra, the Indicator trait, batch + s
 
 # Rust
 
-> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+> **Verified against the Rust reference.** Every one of Wickra's 515 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
 
 ```bash
 cargo add wickra
@@ -17,7 +17,7 @@ The `wickra` crate is a façade that re-exports `wickra-core`. For lean
 builds you can depend on `wickra-core` directly and pick features with
 `--no-default-features`.
 
-- **Latest:** [`wickra 2.0.0`](https://crates.io/crates/wickra)
+- **Latest:** [`wickra 2.1.1`](https://crates.io/crates/wickra)
 - **API reference:** <https://docs.rs/wickra/latest/wickra/>
 - **MSRV:** Rust 1.86 (workspace), 1.88 (Node binding crate)
 

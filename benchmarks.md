@@ -188,7 +188,7 @@ with QuanTAlib on SMA and EMA and 1.3–4.2× faster on the other five:
 
 <BenchmarkBar :rows="dotnetStream" :decimals="0" />
 
-Beyond the numbers, the edge is breadth (514 indicators) and incremental
+Beyond the numbers, the edge is breadth (515 indicators) and incremental
 streaming across ten languages — the project's
 [BENCHMARKS.md](https://github.com/wickra-lib/wickra/blob/main/BENCHMARKS.md)
 carries the same tables.

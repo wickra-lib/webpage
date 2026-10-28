@@ -6,7 +6,7 @@ titleTemplate: false
 hero:
   name: "Wickra"
   text: "Streaming-first technical indicators."
-  tagline: "514 indicators with a Rust core, native Python, Node.js, WASM + C ABI hub → C, C++, C#, Go, Java, R. Same code for backtest and live tick. Install-free."
+  tagline: "515 indicators with a Rust core, native Python, Node.js, WASM + C ABI hub → C, C++, C#, Go, Java, R. Same code for backtest and live tick. Install-free."
   image:
     src: /wickra-mark.svg
     alt: Wickra
@@ -42,7 +42,7 @@ features:
     details: Feed prices one by one or hand the whole vector at once — same numeric output, same warmup, same NaN profile. Pinned by tests.
   - icon: 🌐
     title: Identical in every language
-    details: All 514 indicators are replayed through all 10 languages (Rust, Python, Node.js, WASM, C, C++, C#, Go, Java, R) and checked bit-for-bit against the Rust reference — golden fixtures, in CI.
+    details: All 515 indicators are replayed through all 10 languages (Rust, Python, Node.js, WASM, C, C++, C#, Go, Java, R) and checked bit-for-bit against the Rust reference — golden fixtures, in CI.
   - icon: 📈
     title: Native data layer
     details: "A CSV candle reader, tick-to-candle aggregator, timeframe resampler, live Binance WebSocket feed and historical REST fetcher — native in all 10 languages, pulling zero third-party packages. No pandas, no ws, no jackson."
@@ -57,7 +57,7 @@ const installTabs = [
   { label: 'C',      lang: 'bash', code: '# prebuilt wickra.h + library:\n# github.com/wickra-lib/wickra/releases' },
   { label: 'C#',     lang: 'bash', code: 'dotnet add package Wickra' },
   { label: 'Go',     lang: 'bash', code: 'go get github.com/wickra-lib/wickra-go/v2' },
-  { label: 'Java',   lang: 'xml',  code: '<!-- Maven Central -->\n<dependency>\n  <groupId>org.wickra</groupId>\n  <artifactId>wickra</artifactId>\n  <version>2.0.0</version>\n</dependency>' },
+  { label: 'Java',   lang: 'xml',  code: '<!-- Maven Central -->\n<dependency>\n  <groupId>org.wickra</groupId>\n  <artifactId>wickra</artifactId>\n  <version>2.1.1</version>\n</dependency>' },
   { label: 'R',      lang: 'bash', code: 'install.packages("wickra", repos = "https://wickra-lib.r-universe.dev")' },
 ]
 
@@ -287,7 +287,7 @@ wickra-<name>`, `cargo install wickra-<name>`, …) and has its own site.
 | [**Embed**](https://embed.wickra.org) | Allocation-free, `no_std` streaming indicators for bare-metal and HFT, byte-for-byte identical to the core. |
 | [**Pico**](https://pico.wickra.org) | The O(1) indicator core running bare-metal on a $5 Raspberry Pi Pico — the LED blinks on the EMA cross. |
 
-**Try it without installing anything:** all 514 indicators over a real Binance
+**Try it without installing anything:** all 515 indicators over a real Binance
 feed at [live.wickra.org](https://live.wickra.org), the backtester compiled
 to WebAssembly at [backtest-live.wickra.org](https://backtest-live.wickra.org),
 and one strategy spec side by side in Python, Rust, JS and Go at
@@ -296,7 +296,7 @@ them.
 
 ## The full indicator catalogue {#catalogue}
 
-514 indicators across twenty-four families. Every one is implemented once in Rust,
+515 indicators across twenty-four families. Every one is implemented once in Rust,
 re-exported by every binding, and pinned by reference-value tests.
 
 | Family | Examples |

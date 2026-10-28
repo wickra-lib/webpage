@@ -14,7 +14,7 @@ bots and historical backtests share the exact same implementation — no separat
 
 ## What makes it different
 
-Plenty of TA libraries are fast. Wickra's edge is **breadth with reach**: 514
+Plenty of TA libraries are fast. Wickra's edge is **breadth with reach**: 515
 indicators that all update in O(1) per tick and ship natively to ten language
 targets from a single engine. See the
 [indicators overview](https://docs.wickra.org/Indicators-Overview) for the full
@@ -25,7 +25,7 @@ catalogue.
   backtest or one live tick.
 - **One engine, ten languages.** The Rust core ships as a crate, Python wheels,
   a Node native addon and a WASM bundle, plus a C ABI that C, C++, C#, Go, Java
-  and R link against. Identical numbers everywhere — every one of the 514
+  and R link against. Identical numbers everywhere — every one of the 515
   indicators is replayed through all 10 languages and checked bit-for-bit against
   the Rust reference in CI.
 - **Install-free.** `pip install wickra`, `npm install wickra`,

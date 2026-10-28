@@ -5,7 +5,7 @@ description: Wickra in Node — npm install wickra, ESM imports, batch + streami
 
 # Node
 
-> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+> **Verified against the Rust reference.** Every one of Wickra's 515 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
 
 ```bash
 npm install wickra
@@ -15,7 +15,7 @@ The package ships native bindings (built with napi-rs) and pulls in
 the right platform subpackage automatically — no `node-gyp`, no
 post-install build step.
 
-- **Latest:** [`wickra 2.0.0`](https://www.npmjs.com/package/wickra)
+- **Latest:** [`wickra 2.1.1`](https://www.npmjs.com/package/wickra)
 - **Supported Node:** 18 LTS and 20 LTS, on Linux x64 / arm64,
   macOS x64 / arm64, Windows x64.
   *(Windows ARM64 is tracked but blocked on an npm name-publishing

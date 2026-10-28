@@ -5,7 +5,7 @@ description: Wickra in Python — pip install wickra with zero third-party deps 
 
 # Python
 
-> **Verified against the Rust reference.** Every one of Wickra's 514 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
+> **Verified against the Rust reference.** Every one of Wickra's 515 indicators is replayed through all 10 languages and checked bit-for-bit against the Rust core's golden fixtures in CI — the math here is provably identical to every other binding ([how](https://docs.wickra.org/FAQ#do-all-the-language-bindings-compute-the-same-values)).
 
 ```bash
 pip install wickra
@@ -17,7 +17,7 @@ pre-built wheel for every Python 3.9–3.13 on Linux, macOS, and Windows
 (x86_64 and aarch64 where the registry has the platform). NumPy is an optional
 extra (`pip install wickra[numpy]`) for zero-copy interop.
 
-- **Latest:** [`wickra 2.0.0`](https://pypi.org/project/wickra/)
+- **Latest:** [`wickra 2.1.1`](https://pypi.org/project/wickra/)
 - **Supported Python:** 3.9 / 3.11 / 3.12 / 3.13 (3.10 omitted upstream)
 
 ## Batch — TA-Lib-style over a series

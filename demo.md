@@ -11,7 +11,7 @@ Rust kernel that powers `pip install wickra` and `cargo add wickra` is
 producing every indicator value you see.
 
 > **▶ Want real market data?** This page runs every indicator over a *generated*
-> price series. For **all 514 indicators over a live Binance feed** — candles,
+> price series. For **all 515 indicators over a live Binance feed** — candles,
 > trades and order-book depth, still 100% in your browser — head to
 > **[live.wickra.org](https://live.wickra.org)**.
 
